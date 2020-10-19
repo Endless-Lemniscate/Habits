@@ -1,16 +1,15 @@
 package com.example.habits
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.RadioGroup
-import androidx.core.view.get
+import android.view.View
+import android.view.ViewGroup
+import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
+import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_edit.*
-import kotlinx.android.synthetic.main.activity_edit.color
-import kotlinx.android.synthetic.main.activity_edit.description
-import kotlinx.android.synthetic.main.activity_edit.name
-import kotlinx.android.synthetic.main.activity_edit.period
-import kotlinx.android.synthetic.main.activity_edit.priority
+
+
 
 class EditActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,6 +34,31 @@ class EditActivity : AppCompatActivity() {
                 }
             startActivity(intent)
         }
+
+
+        val countries = arrayOf("Высокий", "Средний", "Низкий")
+
+        val adapter = ArrayAdapter(
+            filled_exposed_dropdown.context,
+            R.layout.dropdown_menu_popup_item,
+            countries
+        )
+
+        filled_exposed_dropdown.setAdapter(adapter)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     }
 
 }

@@ -14,32 +14,56 @@
         tools:layout_editor_absoluteY="163dp"
         android:gravity="center_horizontal">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Добавить привычку"/>
 
-        <EditText
-            android:id="@+id/name"
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:autofillHints="name"
-            android:hint="Название привычки"
-            android:inputType="text" />
+            android:hint="Название"
+            android:paddingLeft="100dp"
+            android:paddingRight="100dp">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <EditText
-            android:id="@+id/description"
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:autofillHints="description"
-            android:hint="Описание привычки"
-            android:inputType="text" />
+            android:hint="Описание"
+            android:paddingLeft="100dp"
+            android:paddingRight="100dp">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text" />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <Spinner
             android:id="@+id/priority"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:entries="@array/Priority" />
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Приоритет"
+            android:paddingLeft="100dp"
+            android:paddingRight="100dp">
+            <AutoCompleteTextView
+                android:id="@+id/filled_exposed_dropdown"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="none" />
+        </com.google.android.material.textfield.TextInputLayout>
+
 
         <RadioGroup
             android:id="@+id/type_of_habit"
