@@ -2,6 +2,7 @@ package com.example.habits
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -43,48 +44,68 @@ class MainActivity : AppCompatActivity() {
 
 
     private fun addExtraToDataSet(intent: Intent?){
+        var index = -1
         if (intent?.extras != null) {
+            index = intent.getIntExtra("index", -1)
             val name: String = intent.getStringExtra("name") ?: "Null"
             val description: String = intent.getStringExtra("description") ?: "Null"
             val priority: Int = intent.getIntExtra("priority", 0)
             val type_of_habit: String = intent.getStringExtra("type_of_habit") ?: "Null"
-            val period: Int = intent.getIntExtra("period", 0)
+            val times: Int = intent.getIntExtra("times", 0)
+            val period: String = intent.getStringExtra("period") ?: "Null"
             val color: Int = intent.getIntExtra("color", 0)
 
-            data.add(
-                Habit(
-                    name,
-                    description,
-                    priority,
-                    type_of_habit,
-                    period,
-                    color
+            if(index == -1){
+                index = 0
+                data.add(index,
+                    Habit(
+                        name,
+                        description,
+                        priority,
+                        type_of_habit,
+                        times,
+                        period,
+                        color
+                    )
                 )
-            )
-            viewAdapter.notifyDataSetChanged()
+                viewAdapter.notifyItemInserted(index)
+            }
+            else{
+                data.add(index,
+                    Habit(
+                        name,
+                        description,
+                        priority,
+                        type_of_habit,
+                        times,
+                        period,
+                        color
+                    )
+                )
+                viewAdapter.notifyItemChanged(index)
+            }
         }
     }
 
     private fun setRecyclerViewItemTouchListener() {
         val itemTouchCallback =
-            object :
-                ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
+            object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
+
+
                 override fun onMove(
                     recyclerView: RecyclerView,
                     viewHolder: RecyclerView.ViewHolder,
-                    viewHolder1: RecyclerView.ViewHolder
-                ): Boolean {
+                    viewHolder1: RecyclerView.ViewHolder): Boolean {
+                    return false
+                }
 
-                return false
-            }
-
-            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, swipeDir: Int) {
-                val position = viewHolder.adapterPosition
-                data.removeAt(position)
-                recyclerView.adapter!!.notifyItemRemoved(position)
-            }
+                override fun onSwiped(viewHolder: RecyclerView.ViewHolder, swipeDir: Int) {
+                    val position = viewHolder.adapterPosition
+                    Toast.makeText(applicationContext, "Привычка \"${data[position].name}\" удалена", Toast.LENGTH_SHORT).show()
+                    data.removeAt(position)
+                    recyclerView.adapter!!.notifyItemRemoved(position)
+                }
         }
-
         val itemTouchHelper = ItemTouchHelper(itemTouchCallback)
         itemTouchHelper.attachToRecyclerView(recyclerView)
     }

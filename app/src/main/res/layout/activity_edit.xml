@@ -16,12 +16,12 @@
 
 
         <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Название"
-            android:paddingLeft="100dp"
-            android:paddingRight="100dp">
+            android:paddingLeft="60dp"
+            android:paddingRight="60dp">
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/name"
                 android:layout_width="match_parent"
@@ -29,13 +29,15 @@
                 android:inputType="text" />
         </com.google.android.material.textfield.TextInputLayout>
 
+
+
         <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Описание"
-            android:paddingLeft="100dp"
-            android:paddingRight="100dp">
+            android:paddingLeft="60dp"
+            android:paddingRight="60dp">
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/description"
                 android:layout_width="match_parent"
@@ -43,34 +45,64 @@
                 android:inputType="text" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <Spinner
-            android:id="@+id/priority"
+
+
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:entries="@array/Priority" />
-
-
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            android:text="Выполнять:"
+            />
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Приоритет"
-            android:paddingLeft="100dp"
-            android:paddingRight="100dp">
-            <AutoCompleteTextView
-                android:id="@+id/filled_exposed_dropdown"
-                android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:gravity="center_horizontal">
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                android:layout_width="140dp"
                 android:layout_height="wrap_content"
-                android:inputType="none" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:hint="Раз">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/times"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:text="1"/>
+            </com.google.android.material.textfield.TextInputLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="В"
+                android:padding="20dp"/>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
+                android:layout_width="140dp"
+                android:layout_height="wrap_content"
+                android:hint="Период">
+                <AutoCompleteTextView
+                    android:id="@+id/period"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </LinearLayout>
 
 
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Тип привычки:"
+            />
         <RadioGroup
             android:id="@+id/type_of_habit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:checkedButton="@id/good">
+            android:checkedButton="@id/good"
+            >
+
             <RadioButton
                 android:id="@+id/good"
                 android:transitionName="good"
@@ -85,13 +117,22 @@
                 android:text="Плохая"/>
         </RadioGroup>
 
-        <EditText
-            android:id="@+id/period"
-            android:layout_width="wrap_content"
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:autofillHints="period"
-            android:hint="Желаемая периодичность"
-            android:inputType="number" />
+            android:hint="Приоритет"
+            android:paddingLeft="130dp"
+            android:paddingRight="130dp">
+            <AutoCompleteTextView
+                android:id="@+id/priority_dropdown"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
 
         <EditText
             android:id="@+id/color"
@@ -100,13 +141,24 @@
             android:autofillHints="color"
             android:hint="Цвет карточки"
             android:text="5"
-            android:inputType="number" />
+            android:inputType="number"
+            android:visibility="gone"/>
 
-        <Button
+        <EditText
+            android:id="@+id/index"
+            android:inputType="number"
+            android:visibility="gone"
+            android:layout_height="wrap_content"
+            android:text="-1"
+            android:layout_width="wrap_content" />
+
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/button_save"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Сохранить" />
+            android:text="СОЗДАТЬ"
+            android:enabled="false"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -5,6 +5,7 @@ class Habit(
     val description: String,
     val priority: Number,
     val type_of_habit: String,
-    val period: Number,
+    val times: Number,
+    val period: String,
     val color: Number
 ) {}
