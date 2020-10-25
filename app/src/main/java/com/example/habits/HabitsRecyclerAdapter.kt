@@ -1,45 +1,29 @@
 package com.example.habits
 
-
 import android.content.Intent
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.habits.models.Habit
 import kotlinx.android.extensions.LayoutContainer
-import kotlinx.android.synthetic.main.activity_edit.*
-import kotlinx.android.synthetic.main.layout_habit_list_item.view.*
+import kotlinx.android.synthetic.main.fragment_list.*
+import kotlinx.android.synthetic.main.list_item.view.*
 
 
-//class MyViewHolder (
-//    override val containerView: View
-//) : RecyclerView.ViewHolder(containerView), LayoutContainer {
-//
-//    fun bind(habit: Habit){
-//        name.text = habit.name
-//        description.text = habit.description
-//        priority.text = habit.priority.toString()
-//        type_of_habit.text = habit.type_of_habit
-//        period.text = habit.period.toString()
-//        color.text = habit.color.toString()
-//
-//
-//        //containerView.setOnClickListener { View ->
-//            //Toast.makeText(View.context, "Ты удалил карточку номер $adapterPosition", Toast.LENGTH_SHORT).show()
-//            //this@HabitsRecyclerAdapter.removeAt(adapterPosition)
-//        //}
-//    }
-//}
-
-class HabitsRecyclerAdapter(private val items: MutableList<Habit>) :
+class HabitsRecyclerAdapter(private val items: ArrayList<Habit>, private val activity: FragmentActivity?) :
     RecyclerView.Adapter<HabitsRecyclerAdapter.HabitsViewHolder>() {
+    private lateinit var communicator: Communicator
 
     override fun onCreateViewHolder(parent: ViewGroup,
                                     viewType: Int): HabitsViewHolder {
-        val inflater:LayoutInflater = LayoutInflater.from(parent.context)
-        val inflatedView = inflater.inflate(R.layout.layout_habit_list_item, parent, false)
+        val inflater= LayoutInflater.from(parent.context)
+        val inflatedView = inflater.inflate(R.layout.list_item, parent, false)
+        communicator = activity as Communicator
         return HabitsViewHolder(inflatedView)
     }
 
@@ -49,57 +33,42 @@ class HabitsRecyclerAdapter(private val items: MutableList<Habit>) :
 
     override fun getItemCount() = items.size
 
-    inner class HabitsViewHolder(
-        override val containerView: View
-    ) : RecyclerView.ViewHolder(containerView), LayoutContainer {
+
+    inner class HabitsViewHolder( override val containerView: View )
+        : RecyclerView.ViewHolder(containerView), LayoutContainer {
+
         fun bind(habit: Habit) {
             containerView.apply {
                 name.text = habit.name
                 description.text = habit.description
-                priority.text = when (habit.priority) {
-                    1 -> "Высокий приоритет"
-                    2 -> "Средний приоритет"
-                    3 -> "Низкий приоритет"
-                    else -> "Без приоритета"
-                }
-
-                type_of_habit.text = when (habit.type_of_habit){
-                    "good" -> "Хорошая привычка"
-                    "bad" -> "Плохая привычка"
-                    else -> ""
-                }
-                times.text = habit.times.toString()
+                priority.text = when (habit.priority) {1 -> "Высокий приоритет" 2 -> "Средний приоритет" else -> "Низкий приоритет" }
+                type_of_habit.text = if (habit.habit_type) "Хорошая привычка" else "Плохая привычка"
+                times.text = habit.frequency.toString()
                 period.text = habit.period
                 color.text = habit.color.toString()
             }
 
-
-
-
             containerView.setOnClickListener {
-                Toast.makeText(it.context, "Кликнули \"${items[position].name}\"", Toast.LENGTH_SHORT).show()
+                containerView.card_view.transitionName = "shared_element_container"
                 val hab = items[adapterPosition]
-                val intent = Intent(it.context, EditActivity::class.java)
 
-                intent.apply {
-                    putExtra("index", adapterPosition)
-                    putExtra("name", hab.name)
-                    putExtra("description", hab.description)
-                    putExtra("priority", hab.priority)
-                    putExtra("type_of_habit", hab.type_of_habit)
-                    putExtra("times", hab.times.toString())
-                    putExtra("period", hab.period)
+                val bundle = Bundle()
+                bundle.apply {
+                    putBoolean("isNew", false)
+                    putInt("index", adapterPosition)
+                    putString("name", hab.name)
+                    putString("description", hab.description)
+                    putInt("frequency", hab.frequency.toInt())
+                    putString("period", hab.period)
+                    putBoolean("habitType", hab.habit_type)
+                    putInt("priority", hab.priority.toInt())
+                    putInt("color", habit.color.toInt())
                 }
-                items.removeAt(adapterPosition)
-                it.context.startActivity(intent)
+                communicator.passDataToHabit(bundle, containerView.card_view)
             }
-
-
-
 
         }
     }
-
 }
 
 

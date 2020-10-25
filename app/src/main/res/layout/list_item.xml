@@ -6,42 +6,41 @@
     android:layout_gravity="center_horizontal"
     android:orientation="vertical">
 
-    <androidx.cardview.widget.CardView
+    <com.google.android.material.card.MaterialCardView
         android:id="@+id/card_view"
-        android:layout_gravity="center"
-        android:layout_width="340dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        card_view:cardCornerRadius="6dp"
-        card_view:cardBackgroundColor="@color/cardview_light_background"
-        card_view:cardElevation="8dp"
-        card_view:contentPadding="20dp"
-
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="18dp">
+        card_view:strokeWidth="1dp"
+        card_view:strokeColor="@color/material_on_surface_stroke"
+        card_view:cardElevation="0dp"
+        android:layout_margin="8dp">
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:padding="16dp">
 
             <TextView
                 android:id="@+id/name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="left"
+                android:layout_gravity="start"
                 android:text="Название"
-                android:textSize="20sp"
-                android:textStyle="bold" />
+                android:textAppearance="?attr/textAppearanceHeadline6"/>
 
             <TextView
                 android:id="@+id/description"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingBottom="10dp"
-                android:text="Описание привычки" />
+                android:layout_marginTop="8dp"
+                android:text="Описание привычки"
+                android:textAppearance="?attr/textAppearanceBody2"
+                android:textColor="?android:attr/textColorSecondary"/>
 
             <TextView
+                android:layout_marginTop="16dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
@@ -71,7 +70,7 @@
                         android:layout_height="wrap_content"
                         android:text="Раз"
                         android:textStyle="bold"
-                        android:textSize="10sp" />
+                        android:textSize="12sp" />
                 </LinearLayout>
 
                 <TextView
@@ -100,29 +99,34 @@
                         android:layout_height="wrap_content"
                         android:text="Период"
                         android:textStyle="bold"
-                        android:textSize="10sp" />
+                        android:textSize="12sp" />
                 </LinearLayout>
             </LinearLayout>
 
             <RelativeLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                >
 
-                <TextView
+                <com.google.android.material.chip.Chip
                     android:id="@+id/priority"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
                     android:text="Высокий приоритет"
-                    android:textSize="12sp" />
+                    android:checkable="false"
+                    android:clickable="false"
+                    android:focusable="false"/>
 
-                <TextView
+                <com.google.android.material.chip.Chip
                     android:id="@+id/type_of_habit"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:text="Хорошая привычка"
-                    android:textSize="12sp" />
+                    android:checkable="false"
+                    android:clickable="false"
+                    android:focusable="false"/>
             </RelativeLayout>
 
             <TextView
@@ -131,5 +135,5 @@
                 android:layout_height="wrap_content"
                 android:visibility="gone"/>
         </LinearLayout>
-    </androidx.cardview.widget.CardView>
+    </com.google.android.material.card.MaterialCardView>
 </LinearLayout>

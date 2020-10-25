@@ -1,113 +1,119 @@
 package com.example.habits
 
-import android.content.Intent
+
 import android.os.Bundle
+
+import android.view.MenuItem
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.ItemTouchHelper
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
+import androidx.fragment.app.FragmentPagerAdapter
+import androidx.fragment.app.FragmentTransaction
+import androidx.viewpager2.adapter.FragmentStateAdapter
+import androidx.viewpager2.adapter.FragmentViewHolder
+import androidx.viewpager2.widget.ViewPager2
 import com.example.habits.models.Habit
+import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity() {
-    private lateinit var recyclerView: RecyclerView
-    private lateinit var viewManager: RecyclerView.LayoutManager
-    private lateinit var viewAdapter: RecyclerView.Adapter<*>
-    private val data: MutableList<Habit> = ArrayList()
+var data: ArrayList<Habit> = ArrayList()
+
+
+class MainActivity : AppCompatActivity(), Communicator, NavigationView.OnNavigationItemSelectedListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        viewManager = LinearLayoutManager(this)
-        viewAdapter = HabitsRecyclerAdapter(data)
-        recyclerView = recycler_view
-        recyclerView.apply {
-            setHasFixedSize(true)
-            layoutManager = viewManager
-            adapter = viewAdapter
-        }
 
-        add_habit_fab.setOnClickListener {
-            val intent = Intent(this, EditActivity::class.java)
-            startActivity(intent)
-        }
-
-        setRecyclerViewItemTouchListener()
-    }
-
-    override fun onNewIntent(intent: Intent?) {
-        super.onNewIntent(intent)
-        addExtraToDataSet(intent)
-    }
+        //list_view_pager_view.registerOnPageChangeCallback(doppelgangerPageChangeCallback)
 
 
-    private fun addExtraToDataSet(intent: Intent?){
-        var index = -1
-        if (intent?.extras != null) {
-            index = intent.getIntExtra("index", -1)
-            val name: String = intent.getStringExtra("name") ?: "Null"
-            val description: String = intent.getStringExtra("description") ?: "Null"
-            val priority: Int = intent.getIntExtra("priority", 0)
-            val type_of_habit: String = intent.getStringExtra("type_of_habit") ?: "Null"
-            val times: Int = intent.getIntExtra("times", 0)
-            val period: String = intent.getStringExtra("period") ?: "Null"
-            val color: Int = intent.getIntExtra("color", 0)
+//        val drawerToggle = ActionBarDrawerToggle(this,
+//            navigationDrawerLayout,
+//            R.string.open_drawer,
+//            R.string.close_drawer)
+//        navigationDrawerLayout.addDrawerListener(drawerToggle)
 
-            if(index == -1){
-                index = 0
-                data.add(index,
-                    Habit(
-                        name,
-                        description,
-                        priority,
-                        type_of_habit,
-                        times,
-                        period,
-                        color
-                    )
-                )
-                viewAdapter.notifyItemInserted(index)
-            }
-            else{
-                data.add(index,
-                    Habit(
-                        name,
-                        description,
-                        priority,
-                        type_of_habit,
-                        times,
-                        period,
-                        color
-                    )
-                )
-                viewAdapter.notifyItemChanged(index)
-            }
+        navigation_drawer.setNavigationItemSelectedListener(this)
+
+        if (savedInstanceState == null) {
+            val ft: FragmentTransaction = supportFragmentManager.beginTransaction()
+            val viewPagerFragment = ViewPagerFragment()
+            ft.replace(R.id.fragment_placeholder, viewPagerFragment)
+            ft.commit()
         }
     }
 
-    private fun setRecyclerViewItemTouchListener() {
-        val itemTouchCallback =
-            object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
+    override fun passDataToHabit(bundle: Bundle, elem:View) {
+        val habitFragment = HabitFragment()
+        habitFragment.arguments = bundle
 
-
-                override fun onMove(
-                    recyclerView: RecyclerView,
-                    viewHolder: RecyclerView.ViewHolder,
-                    viewHolder1: RecyclerView.ViewHolder): Boolean {
-                    return false
-                }
-
-                override fun onSwiped(viewHolder: RecyclerView.ViewHolder, swipeDir: Int) {
-                    val position = viewHolder.adapterPosition
-                    Toast.makeText(applicationContext, "Привычка \"${data[position].name}\" удалена", Toast.LENGTH_SHORT).show()
-                    data.removeAt(position)
-                    recyclerView.adapter!!.notifyItemRemoved(position)
-                }
-        }
-        val itemTouchHelper = ItemTouchHelper(itemTouchCallback)
-        itemTouchHelper.attachToRecyclerView(recyclerView)
+        val ft = this.supportFragmentManager.beginTransaction()
+        //ft.addSharedElement(elem, "shared_element_container")
+        ft.add(R.id.fragment_placeholder, habitFragment)
+        ft.commit()
     }
+
+    override fun returnHabitToList(habit: Habit, isNew: Boolean, index: Int, view: View) {
+        val viewPagerFragment = ViewPagerFragment()
+        val listFragment = ListFragment()
+        val ft = supportFragmentManager.beginTransaction()
+
+        //ft.addSharedElement(view, "shared_element_container")
+        ft.replace(R.id.fragment_placeholder, viewPagerFragment)
+        ft.commit()
+
+        if (isNew) {
+            data.add(index, habit)
+            recyclerView.scrollToPosition(index)
+            viewAdapter.notifyItemInserted(index)
+        } else {
+            data.removeAt(index)
+            data.add(index, habit)
+            recyclerView.scrollToPosition(index)
+            viewAdapter.notifyItemInserted(index)
+        }
+
+
+//        listFragment.callback = object : ListFragmentCallBack {
+//            override fun onFragmentViewResumed() {
+//                if (isNew) {
+//                    data.add(index, habit)
+//                    recyclerView.scrollToPosition(index)
+//                    viewAdapter.notifyItemInserted(index)
+//                } else {
+//                    data.removeAt(index)
+//                    data.add(index, habit)
+//                    recyclerView.scrollToPosition(index)
+//                    viewAdapter.notifyItemInserted(index)
+//                }
+//                listFragment.callback = null
+//            }
+//        }
+    }
+
+    override fun onNavigationItemSelected(item: MenuItem): Boolean {
+        navigationDrawerLayout.closeDrawers()
+        val ft: FragmentTransaction = supportFragmentManager.beginTransaction()
+        val fragment = when (item.itemId){
+            R.id.home_screen -> ViewPagerFragment()
+            else -> AboutFragment()
+        }
+        ft.replace(R.id.fragment_placeholder, fragment)
+        ft.commit()
+        return true
+    }
+
+
+//    var doppelgangerPageChangeCallback = object : ViewPager2.OnPageChangeCallback() {
+//        override fun onPageSelected(position: Int) {
+//            Toast.makeText(this@MainActivity, "Selected position: ${position}",
+//                Toast.LENGTH_SHORT).show()
+//        }
+//    }
+
 
 }

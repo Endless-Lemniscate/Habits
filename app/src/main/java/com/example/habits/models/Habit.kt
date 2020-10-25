@@ -1,11 +1,12 @@
 package com.example.habits.models
 
-class Habit(
+
+data class Habit(
     val name: String,
     val description: String,
-    val priority: Number,
-    val type_of_habit: String,
-    val times: Number,
+    val frequency: Number,
     val period: String,
+    val habit_type: Boolean,
+    val priority: Number,
     val color: Number
-) {}
+)
