@@ -2,8 +2,10 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/app.iml" group="habits/app" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/habits.iml" filepath="$PROJECT_DIR$/.idea/habits.iml" group="habits" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/habits.iml" filepath="$PROJECT_DIR$/.idea/habits.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/data/habits.data.iml" filepath="$PROJECT_DIR$/.idea/modules/data/habits.data.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/domain/habits.domain.iml" filepath="$PROJECT_DIR$/.idea/modules/domain/habits.domain.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/habits.presentation.iml" filepath="$PROJECT_DIR$/.idea/modules/app/habits.presentation.iml" />
     </modules>
   </component>
 </project>

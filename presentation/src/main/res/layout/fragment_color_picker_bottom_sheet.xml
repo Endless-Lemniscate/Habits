@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.habit_details.ColorPickerBottomSheetFragment">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="top">
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            card_view:cardCornerRadius="10dp"
+            android:layout_marginTop="50dp"
+            card_view:strokeWidth="1dp"
+            card_view:strokeColor="@color/material_on_surface_stroke"
+            card_view:cardElevation="10dp"
+            app:contentPadding="20dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="10dp"
+                    android:gravity="center_vertical">
+                    <Button
+                        android:id="@+id/close"
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:background="@drawable/exit_24"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="20dp"
+                        android:text="Выберите цвет"
+                        android:textAppearance="?attr/textAppearanceHeadline6"
+                        android:textColor="@color/colorSecondary" />
+                </LinearLayout>
+
+            <RelativeLayout
+                android:id="@+id/color_watch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/round_up"
+                android:layout_marginBottom="10dp">
+                <View
+                    android:id="@+id/color_show"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:background="@color/colorPrimary"/>
+                <TextView
+                    android:id="@+id/rgb"
+                    android:layout_marginTop="30dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:text="HSV(156, 1, 1)"
+                    android:textAppearance="?attr/textAppearanceHeadline5"
+                    android:textColor="#ffffff"/>
+                <TextView
+                    android:paddingBottom="30dp"
+                    android:layout_alignBottom="@id/color_show"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:text="RGB(255, 255, 255)"
+                    android:textAppearance="?attr/textAppearanceHeadline5"
+                    android:textColor="#ffffff"/>
+            </RelativeLayout>
+            <FrameLayout
+                android:id="@+id/color_picker_frame"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/round_down">
+                <HorizontalScrollView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:scrollbars="none">
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                        <com.example.habits.ui.habit_details.views.ColorPicker
+                            android:id="@+id/color_picker"
+                            android:layout_width="1600dp"
+                            android:layout_height="wrap_content"/>
+                    </LinearLayout>
+                </HorizontalScrollView>
+            </FrameLayout>
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+    </FrameLayout>
+</FrameLayout>

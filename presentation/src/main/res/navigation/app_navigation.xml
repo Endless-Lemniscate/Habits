@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/app_navigation"
+    app:startDestination="@+id/home_fragment">
+
+    <fragment
+        android:id="@+id/home_fragment"
+        android:name="com.example.habits.ui.list.ListFragment"
+        android:label="fragment_my_home"
+        tools:layout="@layout/fragment_list">
+        <action
+            android:id="@+id/action_home_fragment_to_habit_details"
+            app:destination="@id/habit_details"
+            app:enterAnim="@anim/slide_from_right"
+            app:launchSingleTop="false" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/habit_details"
+        android:name="com.example.habits.ui.habit_details.HabitDetailsFragment"
+        android:label="habit_details"
+        tools:layout="@layout/fragment_habit_details">
+        <action
+            android:id="@+id/action_habit_details_to_home_fragment"
+            app:destination="@id/home_fragment"
+            app:enterAnim="@anim/slide_to_right"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/aboutFragment"
+        android:name="com.example.habits.ui.AboutFragment"
+        android:label="fragment_about"
+        tools:layout="@layout/fragment_about" />
+
+</navigation>
