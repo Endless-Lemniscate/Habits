@@ -7,9 +7,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.domain.model.Habit
-import com.example.domain.enums.HabitPeriod
-import com.example.domain.enums.HabitPriority
-import com.example.domain.enums.HabitType
+import com.example.domain.model.enums.HabitPeriod
+import com.example.domain.model.enums.HabitPriority
+import com.example.domain.model.enums.HabitType
 import com.example.domain.usecases.InsertHabitUseCase
 import com.example.domain.usecases.GetHabitByIdUseCase
 import kotlinx.coroutines.launch

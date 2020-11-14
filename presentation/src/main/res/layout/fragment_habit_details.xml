@@ -154,7 +154,9 @@
             app:behavior_peekHeight="0dp"
             android:clickable="true"
             app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
-            <fragment android:name="com.example.habits.ui.habit_details.ColorPickerBottomSheetFragment"
+            <fragment
+                android:id="@+id/bottom_sheet_color_picker"
+                android:name="com.example.habits.ui.habit_details.ColorPickerBottomSheetFragment"
                 android:layout_weight="2"
                 android:layout_width="0dp"
                 android:layout_height="match_parent" />

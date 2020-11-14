@@ -11,6 +11,11 @@ interface HabitDao {
     @Query("Select * from habit order by date desc")
     fun getAllHabits(): Flow<List<RoomHabit>>
 
+    @Query("""SELECT * FROM habit WHERE name LIKE :name order by
+                    CASE WHEN :sort = '1' THEN date END ASC,
+                    CASE WHEN :sort = '0' THEN date END DESC""")
+    fun getAllHabitsWithFilters(name: String, sort: Int): Flow<List<RoomHabit>>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertHabit(roomHabit: RoomHabit)
 

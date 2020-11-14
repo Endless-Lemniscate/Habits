@@ -31,6 +31,12 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+
+    packagingOptions {
+        // pickFirst "META-INF/DEPENDENCIES"
+        exclude "META-INF/AL2.0"
+        exclude "META-INF/LGPL2.1"
+    }
 }
 
 dependencies {
@@ -68,6 +74,15 @@ dependencies {
     implementation "jp.wasabeef:glide-transformations:4.3.0"
 
     testImplementation 'junit:junit:4.13.1'
+
+    androidTestImplementation 'android.arch.core:core-testing:1.1.1'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+
+    androidTestImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.4.1'
+    androidTestImplementation 'com.google.truth:truth:1.1'
+
+
+
+
 }

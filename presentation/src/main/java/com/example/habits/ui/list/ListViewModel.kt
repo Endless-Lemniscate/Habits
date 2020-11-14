@@ -5,65 +5,64 @@ import com.example.domain.model.Habit
 import com.example.domain.usecases.AccomplishHabitUseCase
 import com.example.domain.usecases.DeleteHabitUseCase
 import com.example.domain.usecases.LoadHabitsUseCase
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
+
 
 class ListViewModel(loadHabitsUseCase: LoadHabitsUseCase,
                     private val deleteHabitUseCase: DeleteHabitUseCase,
                     private val accomplishHabitUseCase: AccomplishHabitUseCase) : ViewModel() {
 
-    //private val mutableListHabits: MutableLiveData<List<Habit>> = MutableLiveData()
-    val listHabits: LiveData<List<Habit>> = loadHabitsUseCase.loadHabits().asLiveData()
+    val listHabits: LiveData<List<Habit>>
+    private val firstFilter = MutableLiveData<String>("")
+    private val secondFilter = MutableLiveData<Int>(0)
 
     private val mutableScrollState: MutableLiveData<Int> = MutableLiveData()
     val scrollState: LiveData<Int> = mutableScrollState
 
-    fun saveScrollState(scroll: Int){
+    private val combinedFilters = MediatorLiveData<Pair<String?, Int?>>().apply {
+        addSource(firstFilter) {
+            value = Pair(it, secondFilter.value)
+        }
+        addSource(secondFilter) {
+            value = Pair(firstFilter.value, it)
+        }
+    }
+
+    init {
+        listHabits = Transformations.switchMap(combinedFilters) { pair ->
+            val firstValue = pair.first
+            val secondValue = pair.second
+            if (firstValue != null && secondValue != null) {
+                loadHabitsUseCase.loadHabitsWithFilters(firstValue, secondValue).asLiveData()
+            } else null
+        }
+    }
+
+    fun setNameFilter(name: String) {
+        firstFilter.value = name
+    }
+
+    fun setSort(sort: Int) {
+        //0 - DESC
+        //1 - ASC
+        secondFilter.value = sort
+    }
+
+    fun saveScrollState(scroll: Int) {
         mutableScrollState.value = scroll
     }
 
-    fun deleteHabit(habit: Habit){
+    fun deleteHabit(habit: Habit) {
         viewModelScope.launch {
             deleteHabitUseCase.deleteHabit(habit)
         }
     }
 
-    fun accomplishHabitAsync(habit: Habit) = GlobalScope.async {
+    fun accomplishHabitAsync(habit: Habit) = viewModelScope.async {
         accomplishHabitUseCase.accomplishHabit(habit)
     }
 
 }
-
-//    private val allItemsFiltered: LiveData<List<Habit>>
-//    private val filter = MutableLiveData<Array<String>>(arrayOf("%", "0"))
-
-//    init {
-//        val habitDao = AppRoomDatabase.getDatabase(application).habitDao()
-//        repository = HabitRepository(habitDao)
-//
-//        allItemsFiltered = Transformations.switchMap(filter) { filter ->
-//            repository.getItemsFiltered(filter[0], filter[1].toInt())
-//        }
-//    }
-
-//    fun getAllFiltered() : LiveData<List<Habit>>{
-//        return allItemsFiltered
-//    }
-//
-//    fun setFilter(filterName: String, type: Int) {
-//        var name = "%"
-//        if(filterName != ""){
-//            name = "%$filterName%"
-//        }
-//        val newFilter: Array<String> = arrayOf(name, type.toString())
-//        filter.postValue(newFilter)
-//    }
-//
-//    fun deleteHabit(habit: Habit) = viewModelScope.launch(Dispatchers.IO) {
-//        repository.delete(habit)
-//    }
-
-
 
 

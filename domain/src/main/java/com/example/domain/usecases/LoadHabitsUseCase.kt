@@ -13,4 +13,12 @@ class LoadHabitsUseCase(private val habitRepository: HabitRepository,
         return habitRepository.getAllHabits()
     }
 
+    fun loadHabitsWithFilters(name: String, sort: Int): Flow<List<Habit>> {
+        val nameFilter = when (name) {
+            "" -> "%"
+            else -> "%$name%"
+        }
+        return habitRepository.getAllHabitsWithFilters(nameFilter, sort)
+    }
+
 }

@@ -2,9 +2,9 @@ package com.example.data.models
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.example.domain.enums.HabitPeriod
-import com.example.domain.enums.HabitPriority
-import com.example.domain.enums.HabitType
+import com.example.domain.model.enums.HabitPeriod
+import com.example.domain.model.enums.HabitPriority
+import com.example.domain.model.enums.HabitType
 import java.util.*
 
 

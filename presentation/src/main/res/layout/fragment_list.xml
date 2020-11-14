@@ -28,10 +28,14 @@
             app:behavior_peekHeight="100dp"
             android:clickable="true"
             app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
-            <FrameLayout
-                android:id="@+id/bottom_sheet_placeholder"
-                android:layout_width="match_parent"
+
+            <fragment
+                android:id="@+id/bottom_sheet_filter"
+                android:name="com.example.habits.ui.list.BottomSheetFragment"
+                android:layout_weight="2"
+                android:layout_width="0dp"
                 android:layout_height="match_parent" />
+
         </LinearLayout>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

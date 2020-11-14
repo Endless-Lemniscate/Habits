@@ -2,18 +2,19 @@ package com.example.domain.usecases
 
 import com.example.domain.model.Habit
 import com.example.domain.model.HabitDone
-import com.example.domain.enums.HabitType
+import com.example.domain.model.enums.HabitType
 import com.example.domain.repository.HabitRepository
 import kotlinx.coroutines.CoroutineDispatcher
 import java.util.*
 
 
 class AccomplishHabitUseCase(private val habitRepository: HabitRepository,
-                             private val dispatcher: CoroutineDispatcher) {
+                             private val dispatcher: CoroutineDispatcher
+) {
 
     suspend fun accomplishHabit(habit: Habit): String {
 
-        //add habitDone entry
+        //add habitDone
         val habitDone = HabitDone(habit.id, Date())
         habitRepository.insertHabitDone(habitDone)
 

@@ -14,6 +14,10 @@ class HabitRepositoryImpl(private val habitDao: HabitDao): HabitRepository {
         return habitDao.getAllHabits().map { it.map { item -> item.toHabit } }
     }
 
+    override fun getAllHabitsWithFilters(name: String, sort: Int): Flow<List<Habit>> {
+        return habitDao.getAllHabitsWithFilters(name, sort).map { it.map { item -> item.toHabit } }
+    }
+
     override suspend fun insertHabit(habit: Habit) {
         habitDao.insertHabit(habit.toRoomHabit)
     }

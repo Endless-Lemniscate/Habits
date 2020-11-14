@@ -1,6 +1,5 @@
 package com.example.habits.ui.list
 
-
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,7 +7,6 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -21,6 +19,7 @@ import com.example.habits.listViewModelFactory
 import com.example.domain.model.Habit
 import kotlinx.android.synthetic.main.fragment_list.view.*
 import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 
 
@@ -63,11 +62,6 @@ class ListFragment: Fragment(), CellClickListener {
             }
         }).attachToRecyclerView(recyclerView)
 
-        val ft: FragmentTransaction = childFragmentManager.beginTransaction()
-        val bottomSheetFragment = BottomSheetFragment()
-        ft.replace(R.id.bottom_sheet_placeholder, bottomSheetFragment)
-        ft.commit()
-
         return view
     }
 
@@ -84,7 +78,6 @@ class ListFragment: Fragment(), CellClickListener {
         viewModel.listHabits.observe(viewLifecycleOwner, MyObserver())
 //        viewModel.listHabits.observe(viewLifecycleOwner, Observer {
 //            recyclerAdapter.submitList(it)
-//            Log.e("dfsf", "dfsdf")
 //        })
 
     }
@@ -121,15 +114,4 @@ class ListFragment: Fragment(), CellClickListener {
         scroll?.let{ viewManager.scrollToPosition(it) }
     }
 
-//    companion object {
-//        @JvmStatic
-//        fun newInstance(isNew: Boolean, index: Int, which: String) =
-//            ListFragment().apply {
-//                arguments = Bundle().apply {
-//                    putBoolean(ARG_ISNEW, isNew)
-//                    putInt(ARG_INDEX, index)
-//                    putString("which", which)
-//                }
-//            }
-//    }
 }

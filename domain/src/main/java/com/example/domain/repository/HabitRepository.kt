@@ -8,6 +8,8 @@ import kotlinx.coroutines.flow.Flow
 interface HabitRepository {
     fun getAllHabits(): Flow<List<Habit>>
 
+    fun getAllHabitsWithFilters(name: String, sort: Int): Flow<List<Habit>>
+
     suspend fun insertHabit(habit: Habit)
 
     suspend fun getHabitById(id: Int): Habit
