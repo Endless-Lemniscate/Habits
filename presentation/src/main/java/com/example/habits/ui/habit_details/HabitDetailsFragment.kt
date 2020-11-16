@@ -65,9 +65,10 @@ class HabitDetailsFragment: Fragment() {
 
         val view = binding.root
 
-        //change submit button text in edit mode
+        //if id presented change layout to edit mode
         if(arguments?.getInt("habit_id") != null) {
-            view.submit_button.text = "Редактировать"
+            view.submit_button.text = "Сохранить"
+            view.header.text = "Редактировать привычку"
         }
 
         //colorPicker display logic

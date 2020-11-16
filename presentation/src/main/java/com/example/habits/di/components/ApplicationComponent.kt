@@ -1,14 +1,16 @@
 package com.example.habits.di.components
 
+import com.bumptech.glide.RequestManager
 import com.example.domain.usecases.*
 import com.example.habits.di.modules.ContextModule
+import com.example.habits.di.modules.GlideModule
 import com.example.habits.di.modules.HabitsModule
 import dagger.Component
 import javax.inject.Singleton
 
 
 @Singleton
-@Component(modules = [HabitsModule::class, ContextModule::class])
+@Component(modules = [HabitsModule::class, ContextModule::class, GlideModule::class])
 interface ApplicationComponent {
     fun getDeleteHabitUseCase(): DeleteHabitUseCase
 
@@ -19,4 +21,6 @@ interface ApplicationComponent {
     fun getInsertHabitUseCase(): InsertHabitUseCase
 
     fun getAccomplishHabitUseCase(): AccomplishHabitUseCase
+
+    fun getGlide(): RequestManager
 }

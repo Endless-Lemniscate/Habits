@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -23,10 +22,10 @@
                 android:orientation="vertical">
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="18dp"
+                    android:layout_height="70dp"
                     android:background="#7070ee">
                     <TextView
+                        android:layout_margin="14dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Фильтры и сортировки"
@@ -42,33 +41,44 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:layout_margin="20dp">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:padding="15dp"
-                            android:text="Сортировать по приоритету"
+                            android:text="Сортировать по дате создания"
+                            android:textSize="16sp"
                             android:textColor="@color/colorSecondary" />
-
-                        <Button
-                            android:id="@+id/up"
-                            android:layout_width="wrap_content"
+                        <LinearLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="верх" />
-
-                        <Button
-                            android:id="@+id/down"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="вниз" />
+                            android:gravity="right">
+                            <ImageView
+                                android:id="@+id/down"
+                                android:layout_width="36dp"
+                                android:layout_height="36dp"
+                                android:layout_gravity="center"
+                                android:background="@drawable/arrow_down_48"
+                                android:backgroundTint="#7070ee"
+                                android:layout_margin="10dp"/>
+                            <ImageView
+                                android:id="@+id/up"
+                                android:layout_width="36dp"
+                                android:layout_height="36dp"
+                                android:layout_gravity="center"
+                                android:background="@drawable/arrow_up_48"
+                                android:backgroundTint="#7070ee"
+                                android:layout_margin="10dp"/>
+                        </LinearLayout>
                     </LinearLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Поиск"
+                        android:hint="Поиск по названию"
                         android:paddingLeft="60dp"
                         android:paddingRight="60dp">
                         <com.google.android.material.textfield.TextInputEditText

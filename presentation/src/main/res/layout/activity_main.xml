@@ -29,8 +29,11 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="start"
-            android:maxWidth="200dp"
-            app:menu="@menu/actionmenu"/>
+            android:maxWidth="250dp"
+            app:headerLayout="@layout/drawer_header"
+            app:menu="@menu/actionmenu">
+
+        </com.google.android.material.navigation.NavigationView>
     </androidx.drawerlayout.widget.DrawerLayout>
 
 </LinearLayout>

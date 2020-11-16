@@ -12,17 +12,22 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".fragments.HabitFragment"
-    android:transitionName="shared_element_container"
-    android:background="#ffffff">
+    android:transitionName="shared_element_container">
 
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        tools:layout_editor_absoluteX="-16dp"
-        tools:layout_editor_absoluteY="163dp"
         android:gravity="center_horizontal">
+
+        <TextView
+            android:id="@+id/header"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Создать привычку"
+            android:textSize="24sp"
+            android:padding="10dp"/>
 
 
         <com.google.android.material.textfield.TextInputLayout
@@ -31,7 +36,8 @@
             android:layout_height="wrap_content"
             android:hint="Название"
             android:paddingLeft="60dp"
-            android:paddingRight="60dp">
+            android:paddingRight="60dp"
+            android:paddingBottom="5dp">
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/habit_name"
                 android:layout_width="match_parent"
@@ -60,8 +66,10 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Выполнять:"
-            />
+            android:layout_marginTop="10dp"
+            android:paddingBottom="5dp"
+            android:textSize="18sp"
+            android:text="Выполнять:" />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -104,8 +112,10 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Тип привычки:"
-            />
+            android:layout_marginTop="10dp"
+            android:paddingBottom="5dp"
+            android:textSize="18sp"
+            android:text="Тип привычки:" />
         <RadioGroup
             android:id="@+id/habit_type"
             android:layout_width="wrap_content"
@@ -117,18 +127,27 @@
                 android:transitionName="good"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Хорошая"/>
+                android:text="Хорошая"
+                android:textSize="18sp"/>
             <RadioButton
                 android:id="@+id/bad"
                 android:transitionName="bad"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Плохая"/>
+                android:text="Плохая"
+                android:textSize="18sp"/>
         </RadioGroup>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:paddingBottom="5dp"
+            android:textSize="18sp"
+            android:text="Цвет карточки:" />
         <View
             android:id="@+id/col"
-            android:layout_width="60dp"
-            android:layout_height="60dp" />
+            android:layout_width="50dp"
+            android:layout_height="50dp"/>
         <NumberPicker
             android:id="@+id/priority"
             android:layout_width="wrap_content"

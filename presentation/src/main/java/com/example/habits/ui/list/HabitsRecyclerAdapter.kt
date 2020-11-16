@@ -1,6 +1,8 @@
 package com.example.habits.ui.list
 
 import android.content.Context
+import android.content.res.ColorStateList
+import android.opengl.Visibility
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -50,12 +52,17 @@ class HabitsRecyclerAdapter(context: Context, private val cellClickListener: Cel
         fun bind(habit: Habit) {
             itemView.apply {
                 name.text = habit.name
-                description.text = habit.description
-                priority.text = habit.priority.name
-                type_of_habit.text = habit.type.name
+                if(habit.description == ""){
+                    description.visibility = View.GONE
+                } else {
+                    description.text = habit.description
+                }
+
+                priority.text = habit.priority.string
+                type_of_habit.text = habit.type.string
                 frequency.text = habit.count.toString()
-                period.text = habit.period.toString()
-                color.text = habit.color.toString()
+                period.text = habit.period.string
+                color.backgroundTintList = ColorStateList.valueOf(habit.color)
             }
 
             itemView.setOnClickListener{

@@ -11,6 +11,9 @@ class InsertHabitUseCase(private val habitRepository: HabitRepository,
 
     suspend fun insertHabit(habit: Habit) {
         return withContext(dispatcher) {
+            if(habit.name == ""){
+                habit.name = "Без названия"
+            }
             habitRepository.insertHabit(habit)
         }
     }

@@ -67,6 +67,17 @@ class HabitDetailsViewModel(private val getHabitByIdUseCase: GetHabitByIdUseCase
         }
     }
 
+    fun getRgbString() : String {
+        val rgb = Color.valueOf(mutableHabit.value!!.color)
+        return "RGB(${(rgb.red()*255).toInt()}, ${(rgb.green()*255).toInt()}, ${(rgb.blue()*255).toInt()})"
+    }
+
+    fun getHsvString() : String {
+        val hsv = FloatArray(3)
+        Color.colorToHSV(mutableHabit.value!!.color, hsv)
+        return "HSV(${hsv[0].toInt()}, ${hsv[1]}, ${hsv[2]})"
+    }
+
 
 //    fun getPeriod():List<Period> {
 //

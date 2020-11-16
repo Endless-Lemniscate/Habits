@@ -1,5 +1,6 @@
 package com.example.habits.ui.habit_details
 
+import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -34,11 +35,12 @@ class ColorPickerBottomSheetFragment : Fragment() {
         //observe color change for bottomSheet "color-showing" element
         habitDetailsViewModel.habit.observe(viewLifecycleOwner, {
             view.color_show.background = ColorDrawable(it.color)
+            view.rgb_string.text = habitDetailsViewModel.getRgbString()
+            view.hsv_string.text = habitDetailsViewModel.getHsvString()
         })
 
         return view
     }
-
 
 
 }

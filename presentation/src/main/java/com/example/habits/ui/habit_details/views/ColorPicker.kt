@@ -105,7 +105,7 @@ class ColorPicker(context: Context, attrs: AttributeSet) : View(context, attrs){
 
         if(clicked) {
             val colorNumber = (event.x/width*colorsCount).toInt()
-            val colorNumberHSV = colorNumber.toFloat()/colorsCount*360f
+            val colorNumberHSV = colorNumber.toFloat()/colorsCount*360f + (((width/colorsCount.toFloat())/2)/width)*360f
             val hsv = floatArrayOf(colorNumberHSV, 1f, 1f)
             val rgb = Color.HSVToColor(hsv)
             checkedColor = rgb

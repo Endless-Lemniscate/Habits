@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: android.arch.core:core-testing:1.1.1:aar">
+    <CLASSES>
+      <root url="file://$USER_HOME$/.gradle/caches/modules-2/files-2.1/android.arch.core/core-testing/1.1.1/95fc8aa1d8b5ac4e5feeb1e25ee914626bb91918/core-testing-1.1.1.aar" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/android.arch.core/core-testing/1.1.1/70976a87ac7383fdd30429d2882a8cb917e52d86/core-testing-1.1.1-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

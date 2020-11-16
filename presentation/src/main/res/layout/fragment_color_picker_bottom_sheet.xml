@@ -32,13 +32,14 @@
                     android:gravity="center_vertical">
                     <Button
                         android:id="@+id/close"
-                        android:layout_width="36dp"
-                        android:layout_height="36dp"
-                        android:background="@drawable/exit_24"/>
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:background="@drawable/exit_24"
+                        android:backgroundTint="@color/colorSecondary"/>
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingLeft="20dp"
+                        android:paddingStart="20dp"
                         android:text="Выберите цвет"
                         android:textAppearance="?attr/textAppearanceHeadline6"
                         android:textColor="@color/colorSecondary" />
@@ -56,23 +57,24 @@
                     android:layout_height="150dp"
                     android:background="@color/colorPrimary"/>
                 <TextView
-                    android:id="@+id/rgb"
+                    android:id="@+id/hsv_string"
                     android:layout_marginTop="30dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
-                    android:text="HSV(156, 1, 1)"
                     android:textAppearance="?attr/textAppearanceHeadline5"
-                    android:textColor="#ffffff"/>
+                    android:textColor="#ffffff"
+                    tools:text="HSV(156, 1, 1)"/>
                 <TextView
-                    android:paddingBottom="30dp"
+                    android:id="@+id/rgb_string"
+                    android:layout_marginBottom="30dp"
                     android:layout_alignBottom="@id/color_show"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
-                    android:text="RGB(255, 255, 255)"
                     android:textAppearance="?attr/textAppearanceHeadline5"
-                    android:textColor="#ffffff"/>
+                    android:textColor="#ffffff"
+                    tools:text="RGB(255, 255, 255)"/>
             </RelativeLayout>
             <FrameLayout
                 android:id="@+id/color_picker_frame"

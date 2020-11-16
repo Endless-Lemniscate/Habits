@@ -13,8 +13,7 @@
         <action
             android:id="@+id/action_home_fragment_to_habit_details"
             app:destination="@id/habit_details"
-            app:enterAnim="@anim/slide_from_right"
-            app:launchSingleTop="false" />
+            app:enterAnim="@anim/appear" />
     </fragment>
 
     <fragment
@@ -25,7 +24,8 @@
         <action
             android:id="@+id/action_habit_details_to_home_fragment"
             app:destination="@id/home_fragment"
-            app:enterAnim="@anim/slide_to_right"/>
+            app:popUpTo="@id/app_navigation"
+            app:popUpToInclusive="true"/>
     </fragment>
 
     <fragment
