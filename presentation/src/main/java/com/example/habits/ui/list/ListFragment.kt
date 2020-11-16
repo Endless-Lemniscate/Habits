@@ -19,7 +19,6 @@ import com.example.habits.listViewModelFactory
 import com.example.domain.model.Habit
 import kotlinx.android.synthetic.main.fragment_list.view.*
 import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 
 
@@ -58,7 +57,8 @@ class ListFragment: Fragment(), CellClickListener {
             override fun onSwiped(viewHolder: ViewHolder, direction: Int) {
                 val habit: Habit = recyclerAdapter.getHabitAt(viewHolder.adapterPosition)
                 viewModel.deleteHabit(habit)
-                Toast.makeText(context, "Habit deleted", Toast.LENGTH_SHORT).show()
+                val message = getString(R.string.habit_deleted)
+                Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
             }
         }).attachToRecyclerView(recyclerView)
 
@@ -76,9 +76,6 @@ class ListFragment: Fragment(), CellClickListener {
         }
 
         viewModel.listHabits.observe(viewLifecycleOwner, MyObserver())
-//        viewModel.listHabits.observe(viewLifecycleOwner, Observer {
-//            recyclerAdapter.submitList(it)
-//        })
 
     }
 

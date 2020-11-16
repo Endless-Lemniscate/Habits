@@ -69,8 +69,8 @@ class HabitDetailsFragment: Fragment() {
 
         //if id presented change layout to edit mode
         if(arguments?.getInt("habit_id") != null) {
-            view.submit_button.text = "Сохранить"
-            view.header.text = "Редактировать привычку"
+            view.submit_button.text = getString(R.string.save)
+            view.header.text = getString(R.string.edit_habit)
         }
 
         //colorPicker display logic

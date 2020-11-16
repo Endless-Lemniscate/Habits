@@ -1,6 +1,5 @@
 package com.example.habits.ui.habit_details
 
-
 import android.graphics.Color
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -14,6 +13,7 @@ import com.example.domain.usecases.InsertHabitUseCase
 import com.example.domain.usecases.GetHabitByIdUseCase
 import kotlinx.coroutines.launch
 import java.util.*
+
 
 class HabitDetailsViewModel(private val getHabitByIdUseCase: GetHabitByIdUseCase,
                             private val addHabitUseCase: InsertHabitUseCase,
@@ -77,34 +77,5 @@ class HabitDetailsViewModel(private val getHabitByIdUseCase: GetHabitByIdUseCase
         Color.colorToHSV(mutableHabit.value!!.color, hsv)
         return "HSV(${hsv[0].toInt()}, ${hsv[1]}, ${hsv[2]})"
     }
-
-
-//    fun getPeriod():List<Period> {
-//
-//        val periods = habit.value!!.period.split(",")
-//
-//        var months = Period.ZERO
-//        var days = Period.ZERO
-//        var hours = Period.ZERO
-//        var minutes = Period.ZERO
-//
-//        months = try {
-//            Period.parse(periods[0])
-//        } catch (e: Exception){ Period.ZERO }
-//
-//        days = try {
-//            Period.parse(periods[1])
-//        } catch (e: Exception){ Period.ZERO }
-//
-//        hours = try {
-//            Period.parse(periods[2])
-//        } catch (e: Exception){ Period.ZERO }
-//
-//        minutes = try {
-//            Period.parse(periods[3])
-//        } catch (e: Exception){ Period.ZERO }
-//
-//        return listOf(months, days, hours, minutes)
-//    }
 
 }
