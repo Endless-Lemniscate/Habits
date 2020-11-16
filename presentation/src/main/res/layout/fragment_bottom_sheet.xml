@@ -9,87 +9,77 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
-
+        android:orientation="vertical"
+        android:layout_marginTop="50dp">
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="50dp">
-
+            android:layout_height="70dp"
+            android:background="#7070ee">
+            <TextView
+                android:layout_margin="14dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/filters_and_sorts"
+                android:textColor="#ffffff"
+                android:textSize="16sp"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="40dp"
+            android:background="#fafafa">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="70dp"
-                    android:background="#7070ee">
-                    <TextView
-                        android:layout_margin="14dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Фильтры и сортировки"
-                        android:textColor="#ffffff"
-                        android:textSize="16sp"/>
-                </LinearLayout>
+                android:orientation="horizontal"
+                android:layout_margin="20dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="15dp"
+                    android:text="@string/sort_by_date"
+                    android:textSize="16sp"
+                    android:textColor="@color/colorSecondary" />
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:paddingBottom="40dp"
-                    android:background="#fafafa">
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_margin="20dp">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:padding="15dp"
-                            android:text="Сортировать по дате создания"
-                            android:textSize="16sp"
-                            android:textColor="@color/colorSecondary" />
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="right">
-                            <ImageView
-                                android:id="@+id/down"
-                                android:layout_width="36dp"
-                                android:layout_height="36dp"
-                                android:layout_gravity="center"
-                                android:background="@drawable/arrow_down_48"
-                                android:backgroundTint="#7070ee"
-                                android:layout_margin="10dp"/>
-                            <ImageView
-                                android:id="@+id/up"
-                                android:layout_width="36dp"
-                                android:layout_height="36dp"
-                                android:layout_gravity="center"
-                                android:background="@drawable/arrow_up_48"
-                                android:backgroundTint="#7070ee"
-                                android:layout_margin="10dp"/>
-                        </LinearLayout>
-                    </LinearLayout>
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="Поиск по названию"
-                        android:paddingLeft="60dp"
-                        android:paddingRight="60dp">
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/search_edit"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:inputType="text" />
-                    </com.google.android.material.textfield.TextInputLayout>
+                    android:gravity="end">
+                    <ImageView
+                        android:id="@+id/down"
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/arrow_down_48"
+                        android:backgroundTint="#7070ee"
+                        android:layout_margin="10dp"
+                        android:contentDescription="@string/cd_sort_ascended"/>
+                    <ImageView
+                        android:id="@+id/up"
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/arrow_up_48"
+                        android:backgroundTint="#7070ee"
+                        android:layout_margin="10dp"
+                        android:contentDescription="@string/cd_sort_descended"/>
                 </LinearLayout>
             </LinearLayout>
 
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/search_by_name"
+                android:paddingLeft="60dp"
+                android:paddingRight="60dp">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/search_edit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text" />
+            </com.google.android.material.textfield.TextInputLayout>
         </LinearLayout>
 
     </LinearLayout>
@@ -103,6 +93,7 @@
         android:layout_marginEnd="30dp"
         app:backgroundTint="#ffff"
         app:srcCompat="@drawable/add_48"
-        android:tint="#7070ee" />
+        android:tint="#7070ee"
+        android:contentDescription="@string/cd_add_new_habit_button" />
 
 </FrameLayout>

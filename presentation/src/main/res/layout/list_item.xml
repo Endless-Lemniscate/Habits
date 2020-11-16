@@ -33,21 +33,21 @@
                     android:maxLength="25"
                     android:layout_marginStart="15dp"
                     android:gravity="center_vertical" />
-                <FrameLayout
+
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-                    <LinearLayout
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:layout_gravity="right">
-                        <ImageView
-                            android:id="@+id/color"
-                            android:layout_width="36dp"
-                            android:layout_height="36dp"
-                            android:background="@drawable/circle_48"
-                            android:layout_gravity="center" />
-                    </LinearLayout>
-                </FrameLayout>
+                    android:layout_height="match_parent"
+                    android:gravity="end"
+                    android:layout_marginEnd="8dp">
+                    <ImageView
+                        android:id="@+id/color"
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:background="@drawable/circle_48"
+                        android:layout_gravity="center"
+                        android:contentDescription="@string/cd_card_color" />
+                </LinearLayout>
+
 
             </LinearLayout>
 
@@ -75,7 +75,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:text="Периодичность:"
+                    android:text="@string/periodicity"
                     android:textSize="17sp"/>
 
                 <LinearLayout
@@ -96,7 +96,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text=" в "
+                        android:text="@string/in_"
                         android:textSize="25sp"/>
 
                     <TextView
@@ -113,7 +113,7 @@
                     android:id="@+id/button_done"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="ВЫПОЛНИТЬ"
+                    android:text="@string/execute_"
                     android:layout_gravity="center"
                     app:icon="@drawable/check_24"
                     card_view:iconTint="#7070ee"
@@ -132,7 +132,6 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="start"
                         tools:text="Высокий приоритет"/>
-
                     <TextView
                         android:id="@+id/type_of_habit"
                         android:layout_width="wrap_content"

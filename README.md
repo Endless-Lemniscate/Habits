@@ -93,5 +93,10 @@ On each element in list add button "execute". Clicking this button performs foll
 "You should do it $some_number times", but if more then "You are breathtaking!"
 
 ### Addition 8
-Write Unit tests for one ViewModel, all UseCases and repository
+Write Unit tests for:
+
+* one ViewModel
+* all UseCases
+* repository
+
 Write UI test for any screen
