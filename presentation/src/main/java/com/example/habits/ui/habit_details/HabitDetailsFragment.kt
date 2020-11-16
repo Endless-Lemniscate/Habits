@@ -1,6 +1,5 @@
 package com.example.habits.ui.habit_details
 
-
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -14,6 +13,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.domain.model.enums.HabitPeriod
 import com.example.domain.model.enums.HabitPriority
+import com.example.domain.usecases.InsertHabitUseCase
+import com.example.domain.usecases.GetHabitByIdUseCase
 import com.example.habits.HabitsApplication
 import com.example.habits.R
 import com.example.habits.databinding.FragmentHabitDetailsBinding
@@ -35,10 +36,11 @@ class HabitDetailsFragment: Fragment() {
 
         habitDetailsViewModel = ViewModelProvider(this, object : ViewModelProvider.Factory {
             override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-                return HabitDetailsViewModel(
-                    getHabitsByIdUseCase,
-                    insertHabitUseCase,
-                    id) as T
+                return modelClass.getConstructor(
+                    GetHabitByIdUseCase::class.java,
+                    InsertHabitUseCase::class.java,
+                    Integer::class.java)
+                    .newInstance(getHabitsByIdUseCase, insertHabitUseCase, id)
             }
         }).get(HabitDetailsViewModel::class.java)
 
