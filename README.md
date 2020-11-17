@@ -1,6 +1,6 @@
 # Habits
 Android application for tracking habits. 
-This is a sample android Clean Architecture app written in Kotlin
+This is a sample android Clean Architecture app written in Kotlin with MVVM pattern
 
 ## Statement of Work
 Write application with 2 activities.
