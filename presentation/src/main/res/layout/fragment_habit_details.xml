@@ -2,7 +2,6 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
-
     <data>
         <import type="com.example.habits.ui.habit_details.Converters"/>
         <variable
@@ -14,7 +13,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".fragments.HabitFragment"
-    android:transitionName="shared_element_container">
+    android:transitionName="shared_element_container"
+    android:id="@+id/fragment_habit_details">
 
 
     <LinearLayout
