@@ -48,32 +48,32 @@ Rectangle with background of chosen color. Also it should have HSV and RGB strin
 
 ***
 
-## Addition 1
+### Addition 1
 * Change all activities to fragments (make app with single activity)
 * Add navigation drawer element with "home screen" and "about application" pages
 * Add navigation controller to project
 
-## Addition 2
+### Addition 2
 * Change all activities to fragments (make app with single activity)
 * Add navigation drawer element with "home screen" and "about application" pages
 * Add navigation controller to project
 
-## Addition 3
+### Addition 3
 * Create two AndroidX ViewModels for list screen and create/edit screen
 * Add bottomSheet element to list screen for sort and search list items. This bottomSheet should use same viewModel as list fragment
 
-## Addition 4
+### Addition 4
 * Create Room database for application
 * Store habits instances in it
 * Use liveData for receiving data from database
 
-## Addition 5
+### Addition 5
 Use coroutines for "insert to database" function
 
-## Addition 6
+### Addition 6
 Fetch data from remote server and vice versa
 
-## Addition 7
+### Addition 7
 Transit project to clean architecture
 Create 3 modules:
 
