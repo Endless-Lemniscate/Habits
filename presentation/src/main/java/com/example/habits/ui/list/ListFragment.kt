@@ -17,9 +17,9 @@ import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.example.habits.R
 import com.example.habits.listViewModelFactory
 import com.example.domain.model.Habit
+import com.example.domain.usecases.SyncStatus
+import kotlinx.android.synthetic.main.fragment_list.*
 import kotlinx.android.synthetic.main.fragment_list.view.*
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 
 
 private lateinit var viewModel: ListViewModel
@@ -57,8 +57,6 @@ class ListFragment: Fragment(), CellClickListener {
             override fun onSwiped(viewHolder: ViewHolder, direction: Int) {
                 val habit: Habit = recyclerAdapter.getHabitAt(viewHolder.adapterPosition)
                 viewModel.deleteHabit(habit)
-                val message = getString(R.string.habit_deleted)
-                Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
             }
         }).attachToRecyclerView(recyclerView)
 
@@ -74,8 +72,22 @@ class ListFragment: Fragment(), CellClickListener {
                 recyclerAdapter.submitList(items)
             }
         }
-
         viewModel.listHabits.observe(viewLifecycleOwner, MyObserver())
+
+        //show string message on toast
+        viewModel.toastMessage .observe(viewLifecycleOwner, {
+            Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
+        })
+
+        //set string sync_status
+        viewModel.syncStatus.observe(viewLifecycleOwner, {syncStatus ->
+            when(syncStatus) {
+                SyncStatus.Offline -> sync_status_view.text = "Режим оффлайн"
+                is SyncStatus.InProgress -> sync_status_view.text = "Синхронизация ${syncStatus.remain}"
+                is SyncStatus.Error -> sync_status_view.text = "Ошибка ${syncStatus.error.message}"
+                SyncStatus.Success -> sync_status_view.text = "Синхронизировано"
+            }
+        })
 
     }
 
@@ -86,13 +98,7 @@ class ListFragment: Fragment(), CellClickListener {
     }
 
     override fun habitDoneClickListener(habit: Habit) {
-        GlobalScope.launch {
-            val response = viewModel.accomplishHabitAsync(habit).await()
-
-            (activity as AppCompatActivity).runOnUiThread {
-                Toast.makeText(context, response, Toast.LENGTH_SHORT).show()
-            }
-        }
+        viewModel.accomplishHabit(habit)
     }
 
     override fun onPause() {

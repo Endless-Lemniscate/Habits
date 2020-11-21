@@ -15,6 +15,7 @@ import kotlinx.android.synthetic.main.fragment_about.view.*
 
 lateinit var listViewModelFactory: ListViewModelFactory
 
+@ExperimentalStdlibApi
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,7 +27,8 @@ class MainActivity : AppCompatActivity() {
         val loadHabitUseCase = appComponent.getLoadHabitsUseCase()
         val deleteHabitUseCase = appComponent.getDeleteHabitUseCase()
         val accomplishHabitUseCase = appComponent.getAccomplishHabitUseCase()
-        listViewModelFactory = ListViewModelFactory(loadHabitUseCase, deleteHabitUseCase, accomplishHabitUseCase)
+        val syncHabitsWithRemoteUseCase = appComponent.getSyncHabitsWithRemoteUseCase()
+        listViewModelFactory = ListViewModelFactory(loadHabitUseCase, deleteHabitUseCase, accomplishHabitUseCase, syncHabitsWithRemoteUseCase)
 
         //init navigation controller
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment

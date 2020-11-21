@@ -1,15 +1,11 @@
 package com.example.domain.usecases
 
 import com.example.domain.model.Habit
-import com.example.domain.repository.HabitRepository
-import kotlinx.coroutines.CoroutineDispatcher
+import com.example.domain.repository.LocalHabitRepository
 
 
-class GetHabitByIdUseCase(private val habitRepository: HabitRepository,
-                          private val dispatcher: CoroutineDispatcher) {
-
+class GetHabitByIdUseCase(private val localHabitRepository: LocalHabitRepository) {
     suspend fun getHabitById(id: Int): Habit {
-        return habitRepository.getHabitById(id)
+        return localHabitRepository.getHabitById(id)
     }
-
 }

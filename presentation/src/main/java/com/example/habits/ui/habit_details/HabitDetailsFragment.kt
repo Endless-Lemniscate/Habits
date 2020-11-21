@@ -6,10 +6,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.domain.model.enums.HabitPeriod
 import com.example.domain.model.enums.HabitPriority
@@ -20,6 +22,7 @@ import com.example.habits.R
 import com.example.habits.databinding.FragmentHabitDetailsBinding
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.fragment_habit_details.view.*
+import kotlinx.coroutines.launch
 
 
 lateinit var habitDetailsViewModel: HabitDetailsViewModel
@@ -93,10 +96,12 @@ class HabitDetailsFragment: Fragment() {
 
         //save to db and navigate to list by button click
         view.submit_button.setOnClickListener {
-            habitDetailsViewModel.insertHabitToDB()
-            val bundle = Bundle()
-            habitDetailsViewModel.habit.value?.id?.let{ bundle.putInt("habit_id", it)}
-            findNavController().navigate(R.id.action_habit_details_to_home_fragment, bundle)
+            viewLifecycleOwner.lifecycleScope.launch {
+                val message = habitDetailsViewModel.insertHabitToDB()
+                Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+                findNavController().navigate(R.id.action_habit_details_to_home_fragment)
+            }
+            //findNavController().navigate(R.id.action_habit_details_to_home_fragment)
         }
 
         //set "color-showing" element onclick to open bottomSheet colorPicker

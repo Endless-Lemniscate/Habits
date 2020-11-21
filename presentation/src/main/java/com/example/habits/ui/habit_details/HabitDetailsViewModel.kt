@@ -6,8 +6,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.domain.model.Habit
+import com.example.domain.model.Result
 import com.example.domain.model.enums.HabitPeriod
 import com.example.domain.model.enums.HabitPriority
+import com.example.domain.model.enums.HabitStatus
 import com.example.domain.model.enums.HabitType
 import com.example.domain.usecases.InsertHabitUseCase
 import com.example.domain.usecases.GetHabitByIdUseCase
@@ -42,7 +44,7 @@ class HabitDetailsViewModel(private val getHabitByIdUseCase: GetHabitByIdUseCase
             }
         } ?: run {
             mutableHabit.value = Habit("", "", Date(),
-                1, HabitPeriod.HOUR, HabitType.GOOD, HabitPriority.HIGH, Color.RED)
+                1, HabitPeriod.HOUR, HabitType.GOOD, HabitPriority.HIGH, arrayListOf(), Color.RED, HabitStatus.NOT_SYNCED)
             mutableLoaded.value = true
         }
     }
@@ -61,9 +63,12 @@ class HabitDetailsViewModel(private val getHabitByIdUseCase: GetHabitByIdUseCase
         mutableHabit.value = habit
     }
 
-    fun insertHabitToDB(){
-        viewModelScope.launch {
-            addHabitUseCase.insertHabit(habit.value!!)
+    suspend fun insertHabitToDB(): String {
+        val result = addHabitUseCase.insertHabit(habit.value!!)
+
+        return when(result) {
+            is Result.Success -> "Успех"
+            is Result.Error -> "Ошибка"
         }
     }
 

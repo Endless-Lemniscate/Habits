@@ -5,6 +5,7 @@ import com.example.habits.di.components.ApplicationComponent
 import com.example.habits.di.components.DaggerApplicationComponent
 import com.example.habits.di.modules.ContextModule
 
+
 class HabitsApplication: Application() {
     lateinit var applicationComponent: ApplicationComponent
         private set

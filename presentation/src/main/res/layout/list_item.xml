@@ -97,7 +97,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/in_"
-                        android:textSize="25sp"/>
+                        android:textSize="25sp"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="10dp"/>
 
                     <TextView
                         android:id="@+id/period"
