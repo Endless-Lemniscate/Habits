@@ -2,7 +2,7 @@
 Android application for tracking habits. 
 This is a sample android Clean Architecture app written in Kotlin with MVVM pattern
 
-## Offline first sync strategy
+## Offline-first sync strategy
 Each habit has additional field **STATUS** which can take following values:
 
 * OK
@@ -13,105 +13,11 @@ As habit created it takes value **NOT_SYNCED** by default.
 
 Also habit have two fields: one **DONE_DATES** for amount of times it was accomplished and another called **DONE_DATES_NS** for keeping same as previous, but not synced with remote repository.
 
-As supposed by *offline-first approach* local db is the only source of truth. That's mean what local repository should not depend on remote one. Last one is used only to prevent data losses by
+As supposed by *offline-first approach* local db is the only source of truth. That's mean what local repository should not depend on remote one. Last one is used only to prevent data losses and improve stability.
 
-So app has synchronisation module which implemented as *SyncHabitsWithRemote UseCase* in domain module.
+So app has synchronisation module which implemented as *SyncHabitsWithRemote UseCase* in domain layer.
 
-## Statement of Work
-Write application with 2 activities.
-**First activity** consists of habits list. Each habit has following fields:
+This module works only with habits which have **NOT_SYNCED** or **DELETED** value in field **STATUS**. 
 
-* name
-* description
-* priority
-* type
-* periodicity
-* color
-
-First time you open the app displays no habits. Also this activity should have button which opens another activity.
-
-**Second activity** - screen of create/edit habit - has following fields:
-
-* name
-* description
-* priority (Spinner element)
-* type of habit (Radio button element)
-* two fields for putting periodicity and execution amount
-
-This activity should have "save" button, which opens activity with list of habits. Clicking on any list element should open edit activity.
-
-The project must visually match the material design.
- 
-In addition:
-On the create/edit screen add color picker element, which should consist of two parts:
-
-* Element for choosing color
-* Element displaying which color is chosen
-
-**Element for choosing color:**
-Horizontal scrollView element in which situated 16 squares with same distance between them.
-
-1. Each square should have margin not less than 25% of its size
-2. Each square should have its own color
-3. Portrait oriented screen holds 3 or 4 squares. It should be possible to get another color by scrolling
-User should can choose color by clicking on correspondent square.
-4. ScrollView element should have HUE scale gradient background
-5. Color of each square same as color of background behind central point of square
-
-**Element displaying chosen color:**
-Rectangle with background of chosen color. Also it should have HSV and RGB strings on it
-
-***
-
-### Addition 1
-* Change all activities to fragments (make app with single activity)
-* Add navigation drawer element with "home screen" and "about application" pages
-* Add navigation controller to project
-
-### Addition 2
-* Change all activities to fragments (make app with single activity)
-* Add navigation drawer element with "home screen" and "about application" pages
-* Add navigation controller to project
-
-### Addition 3
-* Create two AndroidX ViewModels for list screen and create/edit screen
-* Add bottomSheet element to list screen for sort and search list items. This bottomSheet should use same viewModel as list fragment
-
-### Addition 4
-* Create Room database for application
-* Store habits instances in it
-* Use liveData for receiving data from database
-
-### Addition 5
-Use coroutines for "insert to database" function
-
-### Addition 6
-Fetch data from remote server and vice versa
-
-### Addition 7
-Transit project to clean architecture
-Create 3 modules:
-
-1. domain
-2. data 
-3. presentation
-
-Use dagger for DI
-
-**Implement following business logic:**
-On each element in list add button "execute". Clicking this button performs following actions:
-
-* **For bad habits:** if this habit was executed less than allowed in certain period then display Toast element with text 
-"You can do it $some_number times", but if more then "Stop doing this"
-
-* **For good ones:** if this habit was executed less than needed in certain period then display Toast element with text 
-"You should do it $some_number times", but if more then "You are breathtaking!"
-
-### Addition 8
-Write Unit tests for:
-
-* one ViewModel
-* all UseCases
-* repository
-
-Write UI test for any screen
+* For those which have **NOT_SYNCED** module loads in remote repository and changes status to **OK**. Thereafter it loads every single value from field **DONE_DATES_NS** to remote and clear this field.
+* For habits with status **DELETED** module deletes it from remote storage as well as local storage.
