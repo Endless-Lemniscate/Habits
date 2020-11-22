@@ -81,11 +81,21 @@ class ListFragment: Fragment(), CellClickListener {
 
         //set string sync_status
         viewModel.syncStatus.observe(viewLifecycleOwner, {syncStatus ->
+            println(syncStatus)
             when(syncStatus) {
-                SyncStatus.Offline -> sync_status_view.text = "Режим оффлайн"
-                is SyncStatus.InProgress -> sync_status_view.text = "Синхронизация ${syncStatus.remain}"
-                is SyncStatus.Error -> sync_status_view.text = "Ошибка ${syncStatus.error.message}"
-                SyncStatus.Success -> sync_status_view.text = "Синхронизировано"
+                is SyncStatus.Offline -> {
+                    sync_status_view.text = "Режим оффлайн"
+                    sync_progress.visibility = View.GONE
+                }
+                is SyncStatus.InProgress -> {
+                    sync_status_view.text = "Синхронизация"
+                    sync_progress.visibility = View.VISIBLE
+                }
+                is SyncStatus.Error -> sync_status_view.text = "Ошибка"
+                is SyncStatus.Success -> {
+                    sync_status_view.text = "Синхронизировано"
+                    sync_progress.visibility = View.GONE
+                }
             }
         })
 

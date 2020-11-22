@@ -8,6 +8,7 @@ import com.example.domain.repository.RemoteHabitRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flow
+import java.net.UnknownHostException
 import java.util.*
 
 
@@ -28,7 +29,10 @@ class SyncHabitsWithRemoteUseCase(private val local: LocalHabitRepository, priva
                 else {
                     val status = Sync(habits[0]).run()
                     if(status is SyncStatus.Error) {
-                        emit(SyncStatus.Error(status.error))
+                        when(status.error) {
+                            is UnknownHostException -> emit(SyncStatus.Offline)
+                            else -> emit(SyncStatus.Error(status.error))
+                        }
                     }
                     else {
                         emit(SyncStatus.InProgress(habits.size))
