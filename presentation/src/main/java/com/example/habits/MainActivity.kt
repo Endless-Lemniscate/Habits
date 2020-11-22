@@ -15,7 +15,6 @@ import kotlinx.android.synthetic.main.fragment_about.view.*
 
 lateinit var listViewModelFactory: ListViewModelFactory
 
-@ExperimentalStdlibApi
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {

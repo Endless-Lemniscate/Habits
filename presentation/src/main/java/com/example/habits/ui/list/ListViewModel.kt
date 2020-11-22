@@ -11,10 +11,9 @@ import kotlinx.coroutines.launch
 class ListViewModel(loadHabitsUseCase: LoadHabitsUseCase,
                     private val deleteHabitUseCase: DeleteHabitUseCase,
                     private val accomplishHabitUseCase: AccomplishHabitUseCase,
-                    private val syncHabitsWithRemoteUseCase: SyncHabitsWithRemoteUseCase) : ViewModel() {
+                    syncHabitsWithRemoteUseCase: SyncHabitsWithRemoteUseCase) : ViewModel() {
 
     val syncStatus: LiveData<SyncStatus<Int>> = syncHabitsWithRemoteUseCase.run().asLiveData()
-
     val listHabits: LiveData<List<Habit>>
     private val firstFilter = MutableLiveData("")
     private val secondFilter = MutableLiveData(0)
@@ -43,6 +42,7 @@ class ListViewModel(loadHabitsUseCase: LoadHabitsUseCase,
                 loadHabitsUseCase.loadHabits(firstValue, secondValue).asLiveData()
             } else null
         }
+
     }
 
     fun setNameFilter(name: String) {

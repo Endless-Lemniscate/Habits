@@ -1,6 +1,5 @@
 package com.example.data.repository
 
-import android.util.Log
 import com.example.data.network.DoubletappApiService
 import com.example.domain.model.Habit
 import com.example.domain.model.Result

@@ -16,7 +16,7 @@ class SyncHabitsWithRemoteUseCase(private val local: LocalHabitRepository, priva
      fun run(): Flow<SyncStatus<Int>> {
          val queue = local.getNotSyncedAndDeleted()
 
-         return flow {
+         val flow = flow {
              if (local.isEmpty()) {
                  val status = getAllFromRemote()
                  emit(status)
@@ -38,11 +38,12 @@ class SyncHabitsWithRemoteUseCase(private val local: LocalHabitRepository, priva
             }
 
         }
+         return flow
 
     }
 
 
-    inner class Sync(private val habit: Habit) {
+    private inner class Sync(private val habit: Habit) {
 
         suspend fun run(): SyncStatus<Int> {
             return when (habit.status) {
@@ -71,7 +72,6 @@ class SyncHabitsWithRemoteUseCase(private val local: LocalHabitRepository, priva
         }
 
         private suspend fun deleteRemoteAndLocal(habit: Habit): SyncStatus<Int> {
-
             return habit.remoteId?.let {
                 return@let when (val result = remote.deleteHabit(it)) {
                     is Result.Error -> SyncStatus.Error(result.error)
