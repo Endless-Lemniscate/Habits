@@ -2,7 +2,7 @@
 Android application for tracking habits. 
 This is a sample android Clean Architecture app written in Kotlin with MVVM pattern
 
-##Offline first sync strategy
+## Offline first sync strategy
 Each habit has additional field **STATUS** which can take following values:
 
 * OK
