@@ -9,7 +9,6 @@ import dagger.Provides
 
 @Module
 class UseCasesModule {
-
     @Provides
     fun provideSyncHabitsWithRemoteUseCase(local: LocalHabitRepository, remote: RemoteHabitRepository): SyncHabitsWithRemoteUseCase {
         return SyncHabitsWithRemoteUseCase(local, remote)
