@@ -5,7 +5,6 @@ import androidx.room.Room
 import com.example.data.db.AppDatabase
 import com.example.data.db.HabitDao
 import com.example.data.repository.LocalHabitRepositoryImpl
-import com.example.data.network.DoubletappApiService
 import com.example.domain.repository.LocalHabitRepository
 import dagger.Module
 import dagger.Provides
