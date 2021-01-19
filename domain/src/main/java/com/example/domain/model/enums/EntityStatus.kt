@@ -1,6 +1,6 @@
 package com.example.domain.model.enums
 
-enum class HabitStatus {
+enum class EntityStatus {
     OK,
     NOT_SYNCED,
     DELETED

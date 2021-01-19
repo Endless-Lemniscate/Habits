@@ -1,7 +1,9 @@
 package com.example.domain.usecases
 
+import com.example.domain.model.DoneDate
 import com.example.domain.model.Habit
 import com.example.domain.model.Result
+import com.example.domain.model.enums.EntityStatus
 import com.example.domain.model.enums.HabitType
 import com.example.domain.repository.LocalHabitRepository
 import java.lang.Exception
@@ -14,11 +16,17 @@ class AccomplishHabitUseCase(private val repository: LocalHabitRepository) {
 
         return try {
             //add habitDone
-            repository.insertDoneDate(habit.id, Date())
+            val doneDate = DoneDate(Date(), EntityStatus.NOT_SYNCED)
+            doneDate.habitId = habit.id
+            repository.insertDoneDate(doneDate)
+
+            //update habit status
+            habit.status = EntityStatus.NOT_SYNCED
+            repository.insertHabit(habit)
 
             //get count of habits made in period
             val targetDate = Date().time - habit.period.duration.toMillis()
-            val doneInPeriod = habit.doneDates.filter { it.time > targetDate }.size + 1
+            val doneInPeriod = habit.doneDates.filter { it.date.time > targetDate }.size + 1
 
             return if (habit.type == HabitType.BAD) {
                 if (doneInPeriod >= habit.count) {

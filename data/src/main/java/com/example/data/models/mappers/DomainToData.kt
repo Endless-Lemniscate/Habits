@@ -1,10 +1,12 @@
 package com.example.data.models.mappers
 
+import com.example.data.models.RoomDoneDate
 import com.example.data.models.RoomHabit
+import com.example.domain.model.DoneDate
 import com.example.domain.model.Habit
 
 
-internal val Habit.toRoomHabit: RoomHabit
+internal val Habit.toData: RoomHabit
     get() {
         val roomHabit = RoomHabit(
             id = this.id,
@@ -15,8 +17,6 @@ internal val Habit.toRoomHabit: RoomHabit
             period = this.period,
             type = this.type,
             priority = this.priority,
-            doneDates = this.doneDates,
-            doneDatesNs = this.doneDatesNs,
             color = this.color,
             status = this.status,
             remoteId = this.remoteId
@@ -24,3 +24,6 @@ internal val Habit.toRoomHabit: RoomHabit
 
         return roomHabit
     }
+
+internal val DoneDate.toData: RoomDoneDate
+    get() = RoomDoneDate(this.id, this.habitId, this.date, this.status)

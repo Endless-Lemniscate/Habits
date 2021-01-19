@@ -4,7 +4,7 @@ import com.example.domain.model.Habit
 import com.example.domain.model.Result
 import com.example.domain.model.enums.HabitPeriod
 import com.example.domain.model.enums.HabitPriority
-import com.example.domain.model.enums.HabitStatus
+import com.example.domain.model.enums.EntityStatus
 import com.example.domain.model.enums.HabitType
 import com.example.domain.repository.LocalHabitRepository
 import com.example.domain.repository.RemoteHabitRepository
@@ -21,7 +21,7 @@ import java.util.*
 
 
 @ExperimentalCoroutinesApi
-class SyncHabitsWithRemoteUseCaseTest {
+class HabitSyncManagerHabitsWithRemoteUseCaseTest {
 
     @get:Rule
     val coroutineRule = MainCoroutineRule()
@@ -38,18 +38,18 @@ class SyncHabitsWithRemoteUseCaseTest {
         useCase = SyncHabitsWithRemoteUseCase(local, remote)
 
         habit = Habit("", "", Date(), 5, HabitPeriod.HOUR, HabitType.BAD,
-            HabitPriority.HIGH, arrayListOf(), 1, HabitStatus.OK)
+            HabitPriority.HIGH, arrayListOf(), 1, EntityStatus.OK)
         habit.id = 25
     }
 
     @Test
     fun `if status NOT_SYNCED executes remote_insertHabit`() = runBlockingTest {
         //set status deleted
-        habit.status = HabitStatus.NOT_SYNCED
+        habit.status = EntityStatus.NOT_SYNCED
 
         //return flow of habits with status "DELETED"
         val flow = flowOf(listOf(habit, habit, habit))
-        Mockito.`when`(local.getNotSyncedAndDeleted()).thenReturn(flow)
+        Mockito.`when`(local.getNotSyncedOrDeleted()).thenReturn(flow)
 
         //say what local storage is not empty to avoid getting habits from remote
         Mockito.`when`(local.isEmpty()).thenReturn(false)
@@ -72,7 +72,7 @@ class SyncHabitsWithRemoteUseCaseTest {
         val date = Date()
 
         //set status deleted
-        habit.status = HabitStatus.NOT_SYNCED
+        habit.status = EntityStatus.NOT_SYNCED
         habit.doneDates = arrayListOf()
         habit.remoteId = "remote_id"
 
@@ -82,7 +82,7 @@ class SyncHabitsWithRemoteUseCaseTest {
 
         //return flow of habits with status "DELETED"
         val flow = flowOf(listOf(habit, habit, habit))
-        Mockito.`when`(local.getNotSyncedAndDeleted()).thenReturn(flow)
+        Mockito.`when`(local.getNotSyncedOrDeleted()).thenReturn(flow)
 
         //say what local storage is not empty to avoid getting habits from remote
         Mockito.`when`(local.isEmpty()).thenReturn(false)
@@ -103,12 +103,12 @@ class SyncHabitsWithRemoteUseCaseTest {
     @Test
     fun `if status DELETED executes remote_deleteHabit`() = runBlockingTest {
         //set status deleted
-        habit.status = HabitStatus.DELETED
+        habit.status = EntityStatus.DELETED
         habit.remoteId = "remote_id"
 
         //return flow of habits with status "DELETED"
         val flow = flowOf(listOf(habit, habit, habit))
-        Mockito.`when`(local.getNotSyncedAndDeleted()).thenReturn(flow)
+        Mockito.`when`(local.getNotSyncedOrDeleted()).thenReturn(flow)
 
         //say what local storage is not empty to avoid getting habits from remote
         Mockito.`when`(local.isEmpty()).thenReturn(false)
@@ -129,7 +129,7 @@ class SyncHabitsWithRemoteUseCaseTest {
 
         //return empty flow
         val flow = flowOf<List<Habit>>()
-        Mockito.`when`(local.getNotSyncedAndDeleted()).thenReturn(flow)
+        Mockito.`when`(local.getNotSyncedOrDeleted()).thenReturn(flow)
 
         //say what local storage is empty
         Mockito.`when`(local.isEmpty()).thenReturn(true)

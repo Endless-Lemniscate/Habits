@@ -3,7 +3,7 @@ package com.example.data.models
 import androidx.room.TypeConverter
 import com.example.domain.model.enums.HabitPeriod
 import com.example.domain.model.enums.HabitPriority
-import com.example.domain.model.enums.HabitStatus
+import com.example.domain.model.enums.EntityStatus
 import com.example.domain.model.enums.HabitType
 import java.util.*
 import kotlin.collections.ArrayList
@@ -67,11 +67,11 @@ class AllTypeConverters {
 
     //HabitPeriod
     @TypeConverter
-    fun statusToInt(status: HabitStatus): Int? {
+    fun statusToInt(status: EntityStatus): Int? {
         return status.ordinal
     }
     @TypeConverter
-    fun intToStatus(ordinal: Int): HabitStatus? {
-        return HabitStatus.values()[ordinal]
+    fun intToStatus(ordinal: Int): EntityStatus? {
+        return EntityStatus.values()[ordinal]
     }
 }

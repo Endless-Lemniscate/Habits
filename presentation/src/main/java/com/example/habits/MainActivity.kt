@@ -19,7 +19,6 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
 
         //init viewModelFactory for ListViewModel
         val appComponent = (application as HabitsApplication).applicationComponent
@@ -28,6 +27,8 @@ class MainActivity : AppCompatActivity() {
         val accomplishHabitUseCase = appComponent.getAccomplishHabitUseCase()
         val syncHabitsWithRemoteUseCase = appComponent.getSyncHabitsWithRemoteUseCase()
         listViewModelFactory = ListViewModelFactory(loadHabitUseCase, deleteHabitUseCase, accomplishHabitUseCase, syncHabitsWithRemoteUseCase)
+
+        setContentView(R.layout.activity_main)
 
         //init navigation controller
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment

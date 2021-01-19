@@ -9,7 +9,7 @@ import com.example.domain.model.Habit
 import com.example.domain.model.Result
 import com.example.domain.model.enums.HabitPeriod
 import com.example.domain.model.enums.HabitPriority
-import com.example.domain.model.enums.HabitStatus
+import com.example.domain.model.enums.EntityStatus
 import com.example.domain.model.enums.HabitType
 import com.example.domain.usecases.InsertHabitUseCase
 import com.example.domain.usecases.GetHabitByIdUseCase
@@ -44,7 +44,7 @@ class HabitDetailsViewModel(private val getHabitByIdUseCase: GetHabitByIdUseCase
             }
         } ?: run {
             mutableHabit.value = Habit("", "", Date(),
-                1, HabitPeriod.HOUR, HabitType.GOOD, HabitPriority.HIGH, arrayListOf(), Color.RED, HabitStatus.NOT_SYNCED)
+                1, HabitPeriod.HOUR, HabitType.GOOD, HabitPriority.HIGH, arrayListOf(), Color.RED, EntityStatus.NOT_SYNCED)
             mutableLoaded.value = true
         }
     }

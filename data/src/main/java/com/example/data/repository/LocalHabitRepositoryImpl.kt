@@ -2,29 +2,29 @@ package com.example.data.repository
 
 import com.example.data.db.HabitDao
 import com.example.data.models.mappers.*
+import com.example.domain.model.DoneDate
 import com.example.domain.model.Habit
 import com.example.domain.model.Result
-import com.example.domain.model.enums.HabitStatus
+import com.example.domain.model.enums.EntityStatus
 import com.example.domain.repository.LocalHabitRepository
 import kotlinx.coroutines.flow.*
-import java.util.*
 
 
 class LocalHabitRepositoryImpl(private val habitDao: HabitDao): LocalHabitRepository {
 
     override fun loadHabits(name: String, sort: Int): Flow<List<Habit>> {
         return habitDao.getAllHabitsWithFilters(name, sort)
-            .map { it.map { item -> item.toHabit } }
+            .map { it.map { item -> item.toDomain } }
     }
 
-    override fun getNotSyncedAndDeleted(): Flow<List<Habit>> {
+    override fun getNotSyncedOrDeleted(): Flow<List<Habit>> {
         return habitDao.getNotSyncedAndDeleted()
-            .map { it.map { item -> item.toHabit } }
+            .map { it.map { item -> item.toDomain } }
     }
 
     override suspend fun insertHabit(habit: Habit): Result<Unit> {
         return try {
-            habitDao.insertHabit(habit.toRoomHabit)
+            habitDao.insertHabit(habit.toData)
             Result.Success(Unit)
         } catch (e: Exception) {
             Result.Error(e)
@@ -33,7 +33,7 @@ class LocalHabitRepositoryImpl(private val habitDao: HabitDao): LocalHabitReposi
 
     override suspend fun deleteHabit(habit: Habit): Result<Unit> {
         return try {
-            habitDao.deleteHabit(habit.toRoomHabit)
+            habitDao.deleteHabit(habit.toData)
             Result.Success(Unit)
         } catch (e: Exception) {
             Result.Error(e)
@@ -41,16 +41,14 @@ class LocalHabitRepositoryImpl(private val habitDao: HabitDao): LocalHabitReposi
     }
 
     override suspend fun getHabitById(id: Int): Habit {
-        return habitDao.getHabitById(id).toHabit
+        return habitDao.getHabitById(id).toDomain
     }
 
-    override suspend fun insertDoneDate(id: Int, date: Date): Result<Unit> {
+    override suspend fun insertDoneDate(doneDate: DoneDate): Result<Unit> {
         return try {
-            val habit = habitDao.getHabitById(id)
-            habit.doneDates.add(date)
-            habit.doneDatesNs.add(date) //done dates not synced
-            habit.status = HabitStatus.NOT_SYNCED
-            habitDao.insertHabit(habit)
+            val roomDoneDate = doneDate.toData
+            habitDao.insertDoneDate(roomDoneDate)
+
             Result.Success(Unit)
         } catch (e: Exception) {
             Result.Error(e)
@@ -72,6 +70,10 @@ class LocalHabitRepositoryImpl(private val habitDao: HabitDao): LocalHabitReposi
 
     override suspend fun isEmpty(): Boolean {
         return habitDao.getAll().isEmpty()
+    }
+
+    override suspend fun setDateSynced(id: Int) {
+        habitDao.setDateSynced(id)
     }
 
 }

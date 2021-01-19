@@ -20,7 +20,6 @@ interface DoubletappApiService {
     @GET("habit")
     suspend fun getHabits(): List<Habit>
 
-
     @Headers(
         "accept: application/json",
         "Authorization: $API_KEY",

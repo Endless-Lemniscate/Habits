@@ -2,9 +2,10 @@ package com.example.domain.usecases
 
 import com.example.domain.model.Habit
 import com.example.domain.model.Result
-import com.example.domain.model.enums.HabitStatus
+import com.example.domain.model.enums.EntityStatus
 import com.example.domain.repository.LocalHabitRepository
 import com.example.domain.repository.RemoteHabitRepository
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flow
@@ -12,96 +13,101 @@ import java.net.UnknownHostException
 import java.util.*
 
 
+const val REQUEST_EVERY = 1000L
+
 class SyncHabitsWithRemoteUseCase(private val local: LocalHabitRepository, private val remote: RemoteHabitRepository) {
 
-     fun run(): Flow<SyncStatus<Int>> {
-         val queue = local.getNotSyncedAndDeleted()
+     fun run(): Flow<SyncStatus<Int>> = flow {
 
-         val flow = flow {
-             if (local.isEmpty()) {
-                 val status = getAllFromRemote()
-                 emit(status)
+         if (local.isEmpty()) {
+             when (val result = HabitSyncManager().getAllFromRemote()) {
+                 is Result.Success -> emit(SyncStatus.Success)
+                 is Result.Error -> emit(SyncStatus.Error(result.error))
              }
+         }
 
-             queue.collect { habits ->
+         local.getNotSyncedOrDeleted().collect { habits ->
 
-                if (habits.isEmpty()) emit(SyncStatus.Success)
-                else {
-                    val status = Sync(habits[0]).run()
-                    if(status is SyncStatus.Error) {
-                        when(status.error) {
-                            is UnknownHostException -> emit(SyncStatus.Offline)
-                            else -> emit(SyncStatus.Error(status.error))
-                        }
-                    }
-                    else {
-                        emit(SyncStatus.InProgress(habits.size))
-                    }
-                }
-                kotlinx.coroutines.delay(1000)
-            }
-
+             //if list is empty then return success
+             val status = if (habits.isEmpty()) {
+                 SyncStatus.Success
+             }
+             //else do sync
+             else {
+                 when (val result = HabitSyncManager().syncHabit(habits[0])) {
+                     is Result.Success -> SyncStatus.InProgress(habits.size)
+                     is Result.Error -> {
+                         when(result.error) {
+                             is UnknownHostException -> SyncStatus.Offline
+                             else -> SyncStatus.Error(result.error)
+                         }
+                     }
+                 }
+             }
+             emit(status)
+             delay(REQUEST_EVERY)
         }
-         return flow
 
     }
 
+    private inner class HabitSyncManager {
 
-    private inner class Sync(private val habit: Habit) {
-
-        suspend fun run(): SyncStatus<Int> {
-            return when (habit.status) {
-                HabitStatus.NOT_SYNCED -> syncWithRemote(habit)
-                HabitStatus.DELETED -> deleteRemoteAndLocal(habit)
-                else -> SyncStatus.Error(Exception())
-            }
+        suspend fun syncHabit(habit: Habit): Result<Unit> =
+            when (habit.status) {
+                EntityStatus.NOT_SYNCED -> updateRemote(habit)
+                EntityStatus.DELETED -> deleteRemoteAndLocal(habit)
+                EntityStatus.OK -> Result.Error(Exception())
         }
 
-        private suspend fun syncWithRemote(habit: Habit): SyncStatus<Int> {
+        private suspend fun updateRemote(habit: Habit): Result<Unit> {
             habit.date = Date()
             return when (val result = remote.insertHabit(habit)) {
-                is Result.Error -> SyncStatus.Error(result.error)
+                is Result.Error -> Result.Error(result.error)
                 is Result.Success -> {
                     val id = result.data
-                    habit.doneDatesNs.forEach { remote.habitDone(id, it) }
-                    habit.apply {
-                        doneDatesNs = arrayListOf()
-                        remoteId = id
-                        status = HabitStatus.OK
+
+                    habit.doneDates.forEach { doneDates ->
+                        if(doneDates.status == EntityStatus.NOT_SYNCED) {
+                            remote.habitDone(id, doneDates.date)
+                            local.setDateSynced(doneDates.id)
+                        }
                     }
+                    habit.status = EntityStatus.OK
                     local.insertHabit(habit)
-                    SyncStatus.Success
+                    Result.Success(Unit)
                 }
             }
         }
 
-        private suspend fun deleteRemoteAndLocal(habit: Habit): SyncStatus<Int> {
+        private suspend fun deleteRemoteAndLocal(habit: Habit): Result<Unit> {
             return habit.remoteId?.let {
                 return@let when (val result = remote.deleteHabit(it)) {
-                    is Result.Error -> SyncStatus.Error(result.error)
+                    is Result.Error -> Result.Error(result.error)
                     is Result.Success -> {
                         local.deleteHabit(habit)
-                        SyncStatus.Success
+                        Result.Success(Unit)
                     }
                 }
-            } ?: SyncStatus.Error(Exception())
+            } ?: Result.Error(Exception())
         }
-    }
 
-
-    private suspend fun getAllFromRemote(): SyncStatus<Int> {
-
-        return when(val result = remote.getHabits()) {
-            is Result.Error -> SyncStatus.Error(result.error)
-            is Result.Success -> {
-                val remoteHabits = result.data
-                remoteHabits.forEach {
-                    local.insertHabit(it)
+        suspend fun getAllFromRemote(): Result<Unit> =
+            when(val result = remote.getHabits()) {
+                is Result.Error -> Result.Error(result.error)
+                is Result.Success -> {
+                    val remoteHabits = result.data
+                    remoteHabits.forEach {habit ->
+                        local.insertHabit(habit)
+                        habit.doneDates.forEach { doneDate ->
+                            doneDate.habitId = habit.id
+                            local.insertDoneDate(doneDate)
+                        }
+                    }
+                    Result.Success(Unit)
                 }
-                SyncStatus.Success
             }
-        }
     }
+
 
 //    private suspend fun deleteAllFromRemote() {
 //         val result = remote.getHabits()

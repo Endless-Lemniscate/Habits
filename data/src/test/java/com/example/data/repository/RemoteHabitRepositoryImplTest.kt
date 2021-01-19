@@ -7,7 +7,7 @@ import com.example.domain.model.Habit
 import com.example.domain.model.Result
 import com.example.domain.model.enums.HabitPeriod
 import com.example.domain.model.enums.HabitPriority
-import com.example.domain.model.enums.HabitStatus
+import com.example.domain.model.enums.EntityStatus
 import com.example.domain.model.enums.HabitType
 import com.google.gson.GsonBuilder
 import kotlinx.coroutines.runBlocking
@@ -72,7 +72,7 @@ class RemoteHabitRepositoryImplTest {
         mockWebServer.enqueue(mockResponse)
 
         val habit = Habit("", "", Date(), 5, HabitPeriod.HOUR, HabitType.BAD,
-            HabitPriority.HIGH, arrayListOf(), 1, HabitStatus.OK)
+            HabitPriority.HIGH, arrayListOf(), 1, EntityStatus.OK)
 
         val result = repository.insertHabit(habit)
         if (result is Result.Success) {
