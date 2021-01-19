@@ -1,0 +1,60 @@
+<resources>
+    <string name="app_name">habits</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="open_drawer">opened</string>
+    <string name="close_drawer">closed</string>
+    <string name="user_name">Имя Фамилия</string>
+    <string name="user_email">user@example.com</string>
+    <string name="cd_user_avatar_image">user avatar image</string>
+    <string name="cd_just_random_image">just random image</string>
+    <string name="about_app">О приложении</string>
+    <string name="about_screen1">Данное тестовое приложение написано по серии лекций компании Doubletapp</string>
+    <string name="developer">Разработчик:</string>
+    <string name="developer_name">Шишкин Геннадий</string>
+    <string name="developer_email">Email: Endless-Lemniscate@yandex.ru</string>
+    <string name="developer_phone">Телефон: +7(981)744–06–19</string>
+    <string name="developer_telegram">Telegram: @Endless_Lemniscate</string>
+    <string name="filters_and_sorts">Фильтры и сортировки</string>
+    <string name="sort_by_date">Сортировать по дате изменения</string>
+    <string name="cd_sort_ascended">sort ascended</string>
+    <string name="cd_sort_descended">sort descended</string>
+    <string name="search_by_name">Поиск по названию</string>
+    <string name="cd_add_new_habit_button">add new habit button</string>
+    <string name="choose_color">Выберите цвет</string>
+    <string name="create_habit">Создать привычку</string>
+    <string name="name">Название</string>
+    <string name="description">Описание</string>
+    <string name="execute">Выполнять:</string>
+    <string name="times">Раз</string>
+    <string name="in">В</string>
+    <string name="period">Период</string>
+    <string name="type_of_habit">Тип привычки:</string>
+    <string name="good">Хорошая</string>
+    <string name="bad">Плохая</string>
+    <string name="card_color">Цвет карточки:</string>
+    <string name="create">СОЗДАТЬ</string>
+    <string name="cd_card_color">card color</string>
+    <string name="periodicity">Периодичность:</string>
+    <string name="in_">в</string>
+    <string name="execute_">ВЫПОЛНИТЬ</string>
+    <string name="home_screen">Домашняя страница</string>
+    <string name="save">Сохранить</string>
+    <string name="edit_habit">Редактировать привычку</string>
+    <string name="habit_deleted">Привычка удалена</string>
+
+    <string-array name="periods">
+        <item>Час</item>
+        <item>6 часов</item>
+        <item>День</item>
+        <item>3 дня</item>
+        <item>Неделя</item>
+        <item>Месяц</item>
+        <item>2 месяца</item>
+    </string-array>
+
+    <string-array name="priorities">
+        <item>Высокий</item>
+        <item>Средний</item>
+        <item>Низкий</item>
+    </string-array>
+</resources>
