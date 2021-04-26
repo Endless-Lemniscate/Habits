@@ -1,6 +1,7 @@
 # Habits
 Android application for tracking habits. 
 This is a sample android Clean Architecture app written in Kotlin with MVVM pattern
+This work was done as a test task for applying for a job in a [Doubletapp](https://doubletapp.ai)
 
 ## Offline-first sync strategy
 Each habit has additional field **STATUS** which can take following values:
